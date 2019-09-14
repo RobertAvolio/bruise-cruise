@@ -4,68 +4,77 @@ using UnityEngine;
 
 public class PlayerInputTimer : MonoBehaviour
 {
-    public Attack attack1;
-    public Attack attack2;
-    public Attack attack3;
-    private Renderer rend1;
-    private Renderer rend2;
-    private Renderer rend3;
-    private BoxCollider2D box1;
-    private BoxCollider2D box2;
-    private BoxCollider2D box3;
+    private float timeToAttack;
+    public float startTimeAttack;
+    public float timerStart;
     private float timer;
     private bool hit2;
     // Start is called before the first frame update
     void Start()
     {
-        rend1 = attack1.GetComponent<Renderer>();
-        rend2 = attack2.GetComponent<Renderer>();
-        rend3 = attack3.GetComponent<Renderer>();
-        box1 = attack1.GetComponent<BoxCollider2D>();
-        box2 = attack2.GetComponent<BoxCollider2D>();
-        box3 = attack3.GetComponent<BoxCollider2D>();
         timer = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
-        rend1.enabled = false;
-        box1.enabled = false;
-        rend2.enabled = false;
-        box2.enabled = false;
-        rend3.enabled = false;
-        box3.enabled = false;
-        if (Input.GetKeyUp("e"))
+        if (timeToAttack <= 0)
         {
-            if(timer <= 0)
+            if (Input.GetKeyUp("e"))
             {
-                rend1.enabled = true;
-                box1.enabled = true;
-                timer = 3;
-            } else if(!hit2)
+                if (timer <= 0)
+                {
+                    Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 14, this.gameObject.transform.position.y), new Vector3(11, 6, 1), 0);
+                    foreach(Collider2D enemy in enemiesToDamage)
+                    {
+                        enemy.GetComponent<Enemy>()?.TakeDamage();
+                    }
+                    timer = timerStart;
+                }
+                else if (!hit2)
+                {
+                    Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 12, this.gameObject.transform.position.y - 2), new Vector3(9, 4, 1), 0);
+                    foreach (Collider2D enemy in enemiesToDamage)
+                    {
+                        enemy.GetComponent<Enemy>()?.TakeDamage();
+                    }
+
+                    hit2 = true;
+                }
+                else
+                {
+                    Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 10, this.gameObject.transform.position.y + 4), new Vector3(7, 5, 1), 0);
+                    foreach (Collider2D enemy in enemiesToDamage)
+                    {
+                        enemy.GetComponent<Enemy>()?.TakeDamage();
+                    }
+
+                    timer = 0;
+                }
+                timeToAttack = startTimeAttack;
+            }
+            if (timer > 0)
             {
-                rend2.enabled = true;
-                box2.enabled = true;
-                hit2 = true;
+                timer -= Time.deltaTime;
             }
             else
             {
-                rend3.enabled = true;
-                box3.enabled = true;
-                timer = 0;
+                hit2 = false;
             }
-            
-            
         }
-        if(timer > 0)
+        else
         {
-            timer -= Time.deltaTime;
-        } else
-        {
-            hit2 = false;
+            timeToAttack -= Time.deltaTime;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 14, this.gameObject.transform.position.y), new Vector3(11, 6, 1));
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 12, this.gameObject.transform.position.y - 2), new Vector3(9, 4, 1));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 10, this.gameObject.transform.position.y+4), new Vector3(7, 5, 1));
 
     }
 }
