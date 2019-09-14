@@ -5,7 +5,11 @@ using UnityEngine;
 public class FireballInteractions : MonoBehaviour
 {
     public float xVel;
-
+    public ParticleSystem pSystem;
+    private void Start()
+    {
+        pSystem.Play();
+    }
     // Update is called once per frame
     void Update()
     {
