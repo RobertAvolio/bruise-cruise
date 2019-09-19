@@ -9,6 +9,7 @@ public class PlayerInputTimer : MonoBehaviour
     public float timerStart;
     private float timer;
     private bool hit2;
+    
     // Start is called before the first frame update
     void Start()
     {
