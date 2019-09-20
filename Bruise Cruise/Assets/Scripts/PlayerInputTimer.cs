@@ -20,7 +20,7 @@ public class PlayerInputTimer : MonoBehaviour
     {
         if (timeToAttack <= 0)
         {
-            if (Input.GetKeyUp("e"))
+            if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2"))
             {
                 if (timer <= 0)
                 {
