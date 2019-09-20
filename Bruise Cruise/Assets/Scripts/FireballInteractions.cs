@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class FireballInteractions : MonoBehaviour
 {
+    public float timer = 3f;
     public float xVel;
     public ParticleSystem pSystem;
+
     private void Start()
     {
         pSystem.Play();
@@ -14,6 +16,9 @@ public class FireballInteractions : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.right * xVel * Time.deltaTime);
+
+        timer -= Time.deltaTime;
+        if (timer < 0) Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
