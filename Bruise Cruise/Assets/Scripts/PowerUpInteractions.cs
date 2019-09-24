@@ -16,7 +16,7 @@ public class PowerUpInteractions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp("space") && powered)
+        if ((Input.GetKeyDown("space") || Input.GetKeyDown("joystick button 3")) && powered)
         {
             Instantiate(prefab, new Vector3(this.gameObject.transform.position.x+10, this.gameObject.transform.position.y + 2, 0), Quaternion.identity);
         }

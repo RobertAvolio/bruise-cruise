@@ -9,6 +9,7 @@ public class PlayerInputTimer : MonoBehaviour
     public float timerStart;
     private float timer;
     private bool hit2;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class PlayerInputTimer : MonoBehaviour
     {
         if (timeToAttack <= 0)
         {
-            if (Input.GetKeyUp("e"))
+            if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2"))
             {
                 if (timer <= 0)
                 {
