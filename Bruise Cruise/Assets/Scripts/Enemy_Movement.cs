@@ -6,7 +6,7 @@ public class Enemy_Movement : MonoBehaviour
 {
     public float speed;
     public float stoppingDistance;
-    public float distance;
+    protected float distance;
     private Transform target;
 
     // Start is called before the first frame update
@@ -25,5 +25,9 @@ public class Enemy_Movement : MonoBehaviour
       {
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
       }
+    }
+    public float getDistance()
+    {
+      return distance;
     }
 }

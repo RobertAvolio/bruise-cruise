@@ -727,6 +727,7 @@ GameObject:
   - component: {fileID: 2076000038}
   - component: {fileID: 2076000042}
   - component: {fileID: 2076000043}
+  - component: {fileID: 2076000046}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -845,16 +846,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5ef9635f48cb74d840e10586382fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
-  stoppingDistance: 15
+  speed: 0
+  stoppingDistance: 0
   distance: 0
---- !u!20 &2136493499 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1843099884}
+--- !u!114 &2076000044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4552783956155979095
+  m_GameObject: {fileID: 2076000037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae027358c51c1543b9ef29797d87762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+--- !u!114 &2076000045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076000037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae027358c51c1543b9ef29797d87762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+--- !u!114 &2076000046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076000037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d97150b823fa3479b443e37db82df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &1838877889983677672
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
