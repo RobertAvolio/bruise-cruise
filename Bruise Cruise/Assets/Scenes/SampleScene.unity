@@ -316,7 +316,7 @@ Transform:
   m_LocalScale: {x: 28.66514, y: 21.821688, z: 2.1108155}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &944120600
 MonoBehaviour:
@@ -490,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 500
+  jumpForce: 10
 --- !u!50 &1546931124
 Rigidbody2D:
   serializedVersion: 4
@@ -904,7 +905,7 @@ PrefabInstance:
     - target: {fileID: 4552783955613375292, guid: 65deb7e0b07594a42a010156b2488ced,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4552783955613375292, guid: 65deb7e0b07594a42a010156b2488ced,
         type: 3}

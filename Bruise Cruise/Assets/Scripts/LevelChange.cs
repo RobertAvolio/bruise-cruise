@@ -14,7 +14,6 @@ public class LevelChange : MonoBehaviour
     void Update()
     {
         if (isLevelShifting == true) {
-            print("We're moving the camera");
             float step = speed * Time.deltaTime;
             cam.transform.position = Vector3.MoveTowards(cam.transform.position, targetPosition, step);
             

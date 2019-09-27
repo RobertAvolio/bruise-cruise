@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private Vector2 moveVector;
+    [SerializeField] private float jumpForce;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
         moveVector = moveInput.normalized * speed;
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")) {
+            rb2d.velocity = Vector2.up * jumpForce;
+        }
     }
 
     void FixedUpdate ()
