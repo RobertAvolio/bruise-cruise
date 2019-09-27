@@ -23,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
         moveVector = moveInput.normalized * speed;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")) {
-            rb2d.velocity = Vector2.up * jumpForce;
+            print("Jumping!");
+            rb2d.velocity = Vector2.up * jumpForce * Time.deltaTime;
         }
     }
 
