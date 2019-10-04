@@ -6,7 +6,6 @@ public abstract class PowerUp : MonoBehaviour
 {
     protected bool on = false;
     protected int uses;
-    protected Collider2D coll;
     [SerializeField]
     protected int maxUses;
 
