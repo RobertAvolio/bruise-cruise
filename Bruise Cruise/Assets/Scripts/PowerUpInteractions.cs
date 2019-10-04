@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class PowerUpInteractions : MonoBehaviour
 {
-    public GameObject prefab;
 
-    private bool powered;
     // Start is called before the first frame update
     void Start()
     {
-        powered = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown("space") || Input.GetKeyDown("joystick button 3")) && powered)
-        {
-            Instantiate(prefab, new Vector3(this.gameObject.transform.position.x+10, this.gameObject.transform.position.y + 2, 0), Quaternion.identity);
-        }
+       
     }
-
-    public void StartPower()
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-
-        powered = true;
-        
+        if(collision.gameObject.tag == "Pickup")
+        {
+            Debug.Log("Picked up.");
+            PowerUp pu = collision.gameObject.GetComponent<PowerUp>();
+            pu.StartPowerUp();
+        }
     }
 }
