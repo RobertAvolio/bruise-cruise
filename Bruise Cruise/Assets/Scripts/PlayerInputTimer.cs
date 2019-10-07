@@ -9,11 +9,13 @@ public class PlayerInputTimer : MonoBehaviour
     public float timerStart;
     private float timer;
     private bool hit2;
+    private Animator anim;
     
     // Start is called before the first frame update
     void Start()
     {
         timer = 0;
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
