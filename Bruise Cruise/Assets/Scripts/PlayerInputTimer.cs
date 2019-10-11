@@ -26,6 +26,8 @@ public class PlayerInputTimer : MonoBehaviour
             {
                 if (timer <= 0)
                 {
+                    anim.SetBool("Hit1",true);
+
                     Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 14, this.gameObject.transform.position.y), new Vector3(11, 6, 1), 0);
                     foreach(Collider2D enemy in enemiesToDamage)
                     {
@@ -35,6 +37,8 @@ public class PlayerInputTimer : MonoBehaviour
                 }
                 else if (!hit2)
                 {
+                    anim.SetBool("Hit2",true);
+
                     Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 12, this.gameObject.transform.position.y - 2), new Vector3(9, 4, 1), 0);
                     foreach (Collider2D enemy in enemiesToDamage)
                     {
@@ -45,6 +49,7 @@ public class PlayerInputTimer : MonoBehaviour
                 }
                 else
                 {
+                    anim.SetBool("Hit3",true);
                     Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(this.gameObject.transform.position.x + 10, this.gameObject.transform.position.y + 4), new Vector3(7, 5, 1), 0);
                     foreach (Collider2D enemy in enemiesToDamage)
                     {
@@ -79,5 +84,17 @@ public class PlayerInputTimer : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 10, this.gameObject.transform.position.y+4), new Vector3(7, 5, 1));
 
+    }
+
+    public void StopHit(int index) {
+        if (index == 0) {
+            anim.SetBool("Hit1",false);
+        }
+        else if (index == 1) {
+            anim.SetBool("Hit2",false);
+        }
+        else if (index == 2) {
+            anim.SetBool("Hit3",false);
+        }        
     }
 }
