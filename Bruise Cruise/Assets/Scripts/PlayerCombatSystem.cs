@@ -10,7 +10,7 @@ public class PlayerCombatSystem : MonoBehaviour
     private bool h1, h2, h3;
     private Animator anim;
     private CombatState curr;
-    private const float DEFAULT_TIME = 0.75f;
+    private const float DEFAULT_TIME = 1f;
     private const float COOLDOWN_TIME = 0.5f;
     
     public Transform L_Hitbox, R_Hitbox;
@@ -31,10 +31,12 @@ public class PlayerCombatSystem : MonoBehaviour
         // CombatState machine! I finally made one and it's so cool! - Love, Ben
         switch(curr) {
             case CombatState.Waiting:
+                print("Waiting");
                 cooldownTimer -= Time.deltaTime;
 
                 if (cooldownTimer <= 0) {
                     if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
+                        anim.SetBool("Hit1",true);
                         curr = CombatState.Hit1;
                     }
                 }
@@ -42,16 +44,15 @@ public class PlayerCombatSystem : MonoBehaviour
                 break;
 
             case CombatState.Hit1:
-                anim.SetBool("Hit1",true);
                 attackTimer -= Time.deltaTime;
 
-                if (attackTimer >= 0f) {
+                if (attackTimer >= 0f && !anim.GetBool("Hit1")) {
                     if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
+                        anim.SetBool("Hit2",true);
                         attackTimer = DEFAULT_TIME;
                         curr = CombatState.Hit2;
                     }
                 } else {
-                    print("hit2?");
                     attackTimer = DEFAULT_TIME;
                     cooldownTimer = COOLDOWN_TIME;
                     curr = CombatState.Waiting;
@@ -60,11 +61,11 @@ public class PlayerCombatSystem : MonoBehaviour
                 break;
 
             case CombatState.Hit2:
-                anim.SetBool("Hit2",true);
                 attackTimer -= Time.deltaTime;
 
                 if (attackTimer >= 0f) {
-                    if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
+                    if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2") && !anim.GetBool("Hit2")) {
+                        anim.SetBool("Hit3",true);
                         attackTimer = DEFAULT_TIME;
                         curr = CombatState.Hit3;
                     }
@@ -77,7 +78,6 @@ public class PlayerCombatSystem : MonoBehaviour
                 break;
                 
             case CombatState.Hit3:
-                anim.SetBool("Hit3",true);
                 attackTimer = DEFAULT_TIME;
                 cooldownTimer = COOLDOWN_TIME;
                 curr = CombatState.Waiting;
