@@ -27,6 +27,8 @@ public class new_ai_statemachine : MonoBehaviour
         //connects the statemachine to the enemy's position and the player's position, so it can use them to make decisions
         StateMachine.player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         StateMachine.self = transform;
+
+        //this is tacky and will be gone when I implement default substates the state class
         StateMachine.CurrentSubState = Patrolling;
 
         Debug.Log("Started");
