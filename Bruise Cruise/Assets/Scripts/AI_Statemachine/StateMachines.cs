@@ -10,9 +10,23 @@ namespace StateMachineStuff
     public abstract class State<T>
     {
         //functions to run when entering, exiting, and executing a state
-        public abstract void EnterState();
+        public virtual void EnterState()
+        {
+            //run the enter function for the current substate, enter the defaultsubstate if that doesn't exist
+            if (defaultSubState != null)
+            {
+                CurrentSubState = SubStatesMap[defaultSubState];
+                CurrentSubState.EnterState();
+            }
+        }
         public abstract string RunState();
-        public abstract void ExitState();
+        public virtual void ExitState()
+        {
+            if (CurrentSubState != null)
+            {
+                CurrentSubState.ExitState();
+            }
+        }
 
         //stores all of a states substates, along with their names
         protected Dictionary<string, State<T>> SubStatesMap = new Dictionary<string, State<T>>();
@@ -22,11 +36,20 @@ namespace StateMachineStuff
         
         //the state all the way at the top of the tree, the 'Statemachine' that all it' states are a part of
         protected T Owner;
-        
+
+        //the state first entered when the game starts
+        protected string defaultSubState;
+
         //sets the owner
         public void setOwner(T owner)
         {
             Owner = owner;
+        }
+
+        //set the default substate
+        public void setDefaultSubState(string state)
+        {
+            defaultSubState = state;
         }
 
         //appends a given substate and name to the substates map
