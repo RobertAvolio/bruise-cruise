@@ -13,13 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveVector;
     private bool wantsToJump = false;
     private Animator anim;
-    private Transform transform;
+    private Transform tf;
     
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        transform = GetComponent<Transform>();
+        tf = GetComponent<Transform>();
     }
 
     void Update() {
@@ -28,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetAxis("Horizontal") > 0) {
-            transform.eulerAngles = new Vector3(0,0,0);
+            tf.eulerAngles = new Vector3(0,0,0);
         } else if (Input.GetAxis("Horizontal") < 0) {
-            transform.eulerAngles = new Vector3(0,180,0);
+            tf.eulerAngles = new Vector3(0,180,0);
         }
 
         if (rb2d.velocity.x != 0) {
