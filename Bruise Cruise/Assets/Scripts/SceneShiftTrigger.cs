@@ -6,9 +6,9 @@ public class SceneShiftTrigger : MonoBehaviour
 {
     [SerializeField] private LevelChange lvl;
 
-    [SerializeField] private bool isUp;
-    [SerializeField] private bool isRight;
-    [SerializeField] private bool isDown;
+    [SerializeField] private bool isUp = false;
+    [SerializeField] private bool isRight = false;  
+    [SerializeField] private bool isDown = false;
 
     private bool wasActivated = false;
 

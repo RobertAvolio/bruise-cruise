@@ -17,16 +17,25 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     ChasingThot chasingThot = new ChasingThot();
     PatrollingThot patrollingThot = new PatrollingThot();
 
+    Rigidbody2D rb2d;
+
     private Animator anim;
     private Transform player;
 
-    public void takeDamage()
+    [SerializeField]
+    private int health = 5;
+
+    public void TakeDamage()
     {
-        motionSM.updateState("stagger");
+        
         if (motionSM.CurrentSubState != staggerState)
         {
             //take that bitch health away
+            health--;
+            // if the health is zero or below, kill it
+            if (health <= 0) this.gameObject.SetActive(false);
         }
+        motionSM.updateState("stagger");
     }
 
     void Awake()
@@ -64,6 +73,7 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 
     private void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         motionSM.EnterState();
@@ -76,7 +86,8 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
         motionSM.self = new Vector2(transform.position.x, transform.position.y);
         thotSM.self = new Vector2(transform.position.x, transform.position.y);
         thotSM.player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
-        transform.position += new Vector3(motionSM.velocity.x, motionSM.velocity.y, 0) * Time.deltaTime;
+        //rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2d.velocity.y);
+        rb2d.velocity = new Vector3(motionSM.velocity.x, rb2d.velocity.y, 0);
 
         motionSM.isAttacking = thotSM.isAttacking;
         motionSM.targetPosition = thotSM.targetPosition;
@@ -111,8 +122,8 @@ public class ThotSM : State<ThotSM>
     public Vector2 targetPosition;
     public bool isAttacking;
     protected float distanceToPlayer;
-    protected float attackRadius = 20;
-    protected float lookingRadius = 60;
+    protected float attackRadius = 3.5f;
+    protected float lookingRadius = 15;
     public override void EnterState()
     {
         base.EnterState();
@@ -334,7 +345,7 @@ public class RunningState : State<MotionSM>
     public override void EnterState()
     {
         Owner.Gravity = 10;
-        Owner.speed = 15;
+        Owner.speed = 2.5f;
         Debug.Log("entered running state");
         base.EnterState();
     }
