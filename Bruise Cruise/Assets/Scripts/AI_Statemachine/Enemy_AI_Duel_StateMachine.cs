@@ -17,7 +17,18 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     ChasingThot chasingThot = new ChasingThot();
     PatrollingThot patrollingThot = new PatrollingThot();
 
+    private Animator anim;
     private Transform player;
+
+    public void takeDamage()
+    {
+        motionSM.updateState("stagger");
+        if (motionSM.CurrentSubState != staggerState)
+        {
+            //take that bitch health away
+        }
+    }
+
     void Awake()
     {
         #region assemble motionSM
@@ -49,11 +60,11 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 
         thotSM.setDefaultSubState("patrolling");
         #endregion
-
     }
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         motionSM.EnterState();
         thotSM.EnterState();
@@ -72,6 +83,21 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 
         motionSM.StateUpdate();
         thotSM.StateUpdate();
+
+        if (motionSM.velocity.x < -1)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
+
+        if (motionSM.velocity.x > 1)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+
+        if (motionSM.CurrentSubState == staggerState)
+        {
+            anim.Play("Damage1");
+        }
     }
 }
 
@@ -85,8 +111,8 @@ public class ThotSM : State<ThotSM>
     public Vector2 targetPosition;
     public bool isAttacking;
     protected float distanceToPlayer;
-    protected float attackRadius = 30;
-    protected float lookingRadius = 100;
+    protected float attackRadius = 20;
+    protected float lookingRadius = 60;
     public override void EnterState()
     {
         base.EnterState();
@@ -252,6 +278,7 @@ public class AttackState : State<MotionSM>
     protected int combatTimer;
     public override void EnterState()
     {
+        Owner.velocity = new Vector2(0, 0);
         Debug.Log("entered the attacking state");
         base.EnterState();
     }

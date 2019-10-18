@@ -69,7 +69,8 @@ namespace StateMachineStuff
         }
 
         //Changes the substate, running the ExitState and EnterState functions for it
-        private void updateState(string NewState)
+        //SHOULD BE PRIVATE, PUBLIC FOR NOW BECAUSE IT'S 3AM AND I WANT TO ADD TAKEDAMAGE() TO EUSTACE
+        public void updateState(string NewState)
         {
             if (NewState != null)
             {
