@@ -11,22 +11,49 @@ public class PlayerMovement : MonoBehaviour
     private float lowJumpMultiplier = 5f;
     private Rigidbody2D rb2d;
     private Vector2 moveVector;
-    private bool wantsToJump = false;
+    private bool jumping = false;
     private Animator anim;
     private Transform tf;
+    private float jumpTimer;
+    public float jumpLength;
     
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         tf = GetComponent<Transform>();
+        //rb2d.gravityScale = 1f;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            wantsToJump = true;
+        
+        // Y movement
+        if (Input.GetKeyDown(KeyCode.Space) && rb2d.velocity.y == 0) { 
+            jumping = true;
+            jumpTimer = jumpLength;
+            rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, jumpForce);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            jumping = false;
         }
 
+        if (jumping && Input.GetKey(KeyCode.Space))
+        {
+
+            if (jumpTimer > 0)
+            {
+                rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, jumpForce);
+                jumpTimer -= Time.deltaTime;
+            }
+            else
+            {
+                jumping = false;
+            }
+        }
+
+
+        // X movement
         if (Input.GetAxis("Horizontal") > 0) {
             tf.eulerAngles = new Vector3(0,0,0);
         } else if (Input.GetAxis("Horizontal") < 0) {
@@ -43,17 +70,5 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate() {
         rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2d.velocity.y);
 
-        if (wantsToJump) {
-            rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            wantsToJump = false;
-        }
-
-        if (rb2d.velocity.y < 0) {
-            rb2d.gravityScale = fallMultiplier;
-        } else if (rb2d.velocity.y > 0 && !Input.GetKey(KeyCode.Space)) {
-            rb2d.gravityScale = lowJumpMultiplier;
-        } else {
-            rb2d.gravityScale = 1f;
-        }
     }
 }
