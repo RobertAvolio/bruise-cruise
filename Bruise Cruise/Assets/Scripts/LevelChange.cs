@@ -20,8 +20,10 @@ public class LevelChange : MonoBehaviour
             cam.transform.position = Vector3.MoveTowards(cam.transform.position, targetPosition, step);
             
             if (Vector3.Distance(cam.transform.position,targetPosition) < 0.001f) {
-                positionIndex++;
                 isLevelShifting = false;
+                Debug.Log("Index increasing:");
+                positionIndex++;
+                Debug.Log(positionIndex);
             }
         }
     }
@@ -30,7 +32,7 @@ public class LevelChange : MonoBehaviour
     // These functions will move the camera over so we don't call it every frame
     //
     
-    public void ShiftCameraRight() {
+    public void ShiftCamera() {
         
         // Set our target position for the camera shift to the next area
         if(positionIndex >= positions.Length) return;
@@ -41,23 +43,5 @@ public class LevelChange : MonoBehaviour
         isLevelShifting = true;
     }
 
-    public void ShiftCameraUp() {
 
-        // Set our target position for the camera shift to the next area
-        if (positionIndex >= positions.Length) return;
-        targetPosition = new Vector3(cam.transform.position.x, positions[positionIndex].transform.position.y, cam.transform.position.z);
-        
-        // Start the process for shifting the scene
-        isLevelShifting = true;
-    }
-
-    public void ShiftCameraDown() {
-
-        // Set our target position for the camera shift to the next area 
-        if (positionIndex >= positions.Length) return;
-        targetPosition = new Vector3(cam.transform.position.x, positions[positionIndex].transform.position.y, cam.transform.position.z);
-        
-        // Start the process for shifting the scene
-        isLevelShifting = true;
-    }
 }
