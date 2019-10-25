@@ -4,9 +4,15 @@
 
 public static class PlayerStats
 {
-    private static int _playerHealth = 100;
+    private static int playerHealth = 100;
 
-    public static int PlayerHealth {
-        get => _playerHealth;
+    public static int GetHealth()
+    {
+        return playerHealth;
+    }
+
+    public static void SetHealth(int health)
+    {
+        playerHealth = health;
     }
 }
