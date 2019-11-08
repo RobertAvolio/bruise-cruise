@@ -4,6 +4,8 @@ using UnityEngine;
 using StateMachineStuff;
 public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 {
+    public Transform Hurtbox;
+
     MotionSM motionSM = new MotionSM();
     MovementState movementState = new MovementState();
     AttackState attackState = new AttackState();
@@ -40,6 +42,9 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 
     void Awake()
     {
+        //connect hurtboxes to thotSM
+        thotSM.Hurtbox = Hurtbox;
+
         #region assemble motionSM
         motionSM.addSubState("movement", movementState);
         motionSM.addSubState("attacking", attackState);
@@ -117,6 +122,9 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 #region tier one state
 public class ThotSM : State<ThotSM>
 {
+    [SerializeField]
+    public Transform Hurtbox;
+
     public Vector2 player;
     public Vector2 self;
     public Vector2 targetPosition;
@@ -124,6 +132,7 @@ public class ThotSM : State<ThotSM>
     protected float distanceToPlayer;
     protected float attackRadius = 3.5f;
     protected float lookingRadius = 15;
+
     public override void EnterState()
     {
         base.EnterState();
@@ -157,6 +166,15 @@ public class CombatThot : State<ThotSM>
     private int combatTimer;
     public override void EnterState()
     {
+        Collider2D[] thingsHit = Physics2D.OverlapBoxAll(new Vector2(Owner.Hurtbox.position.x, Owner.Hurtbox.position.y), new Vector2(7, 5), 0f);
+        foreach (Collider2D thing in thingsHit)
+        {
+            if (thing.tag == "Player")
+            {
+                thing.GetComponent<PlayerStats>()?.TakeDamage();
+            }
+                
+        }
         combatTimer = 10;
         Owner.isAttacking = true;
         base.EnterState();
