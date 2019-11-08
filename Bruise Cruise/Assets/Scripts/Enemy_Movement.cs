@@ -11,7 +11,7 @@ public class Enemy_Movement : MonoBehaviour
     public float stoppingDistance;
     private float distance;
     private Transform target;
-    private bool isMovingTowardsPlayer = false;
+    private bool isMovingTowardsPlayer = false; 
 
     // Start is called before the first frame update
     void Start()

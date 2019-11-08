@@ -36,22 +36,22 @@ public class PlayerCombatSystem : MonoBehaviour
                 if (cooldownTimer <= 0) {
                     if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
                         curr = CombatState.Hit1;
+                        anim.SetBool("Hit1",true);
                     }
                 }
 
                 break;
 
             case CombatState.Hit1:
-                anim.SetBool("Hit1",true);
                 attackTimer -= Time.deltaTime;
 
                 if (attackTimer >= 0f) {
                     if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
                         attackTimer = DEFAULT_TIME;
                         curr = CombatState.Hit2;
+                        anim.SetBool("Hit2",true);
                     }
                 } else {
-                    print("hit2?");
                     attackTimer = DEFAULT_TIME;
                     cooldownTimer = COOLDOWN_TIME;
                     curr = CombatState.Waiting;
@@ -60,13 +60,13 @@ public class PlayerCombatSystem : MonoBehaviour
                 break;
 
             case CombatState.Hit2:
-                anim.SetBool("Hit2",true);
                 attackTimer -= Time.deltaTime;
 
                 if (attackTimer >= 0f) {
                     if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
                         attackTimer = DEFAULT_TIME;
                         curr = CombatState.Hit3;
+                        anim.SetBool("Hit3",true);
                     }
                 } else {
                     attackTimer = DEFAULT_TIME;
@@ -77,7 +77,6 @@ public class PlayerCombatSystem : MonoBehaviour
                 break;
                 
             case CombatState.Hit3:
-                anim.SetBool("Hit3",true);
                 attackTimer = DEFAULT_TIME;
                 cooldownTimer = COOLDOWN_TIME;
                 curr = CombatState.Waiting;
@@ -90,12 +89,23 @@ public class PlayerCombatSystem : MonoBehaviour
 
     }
 
-    private void Attack() {
-
+    private void Attack(int r) {
+        if (r == 0) {
+            Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(R_Hitbox.position.x, R_Hitbox.position.y),new Vector2(3, 2), 0f);
+            foreach(Collider2D enemy in enemiesToDamage)
+            {
+                enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+            }
+        } else {
+            Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(L_Hitbox.position.x, L_Hitbox.position.y),new Vector2(3, 2), 0f);
+            foreach(Collider2D enemy in enemiesToDamage)
+            {
+                enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+            }
+        }
     }
 
     public void StopHitAnimation(int index) {
-        print("Called");
         if (index == 0) {
             anim.SetBool("Hit1",false);
         }
@@ -105,5 +115,11 @@ public class PlayerCombatSystem : MonoBehaviour
         else if (index == 2) {
             anim.SetBool("Hit3",false);
         }
+    }
+
+        private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 5, this.gameObject.transform.position.y + 5), new Vector2(3f, 2f));
     }
 }
