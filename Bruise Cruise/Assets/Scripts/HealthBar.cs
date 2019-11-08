@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
         healthText.text = "Health: " + health;
     }
 
-    void increaseHealthBar(int value)
+    public void IncreaseHealthBar(int value)
     {
         if (health < 100)
         {
@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    void decreaseHealthBar(int value)
+    public void DecreaseHealthBar(int value)
     {
         if (health > 0)
         {
