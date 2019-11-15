@@ -29,7 +29,7 @@ public class new_ai_statemachine : MonoBehaviour
         StateMachine.self = transform;
 
         //this is tacky and will be gone when I implement default substates the state class
-        StateMachine.CurrentSubState = Patrolling;
+        StateMachine.CurrentSubState = "patrolling";
 
         Debug.Log("Started");
     }
