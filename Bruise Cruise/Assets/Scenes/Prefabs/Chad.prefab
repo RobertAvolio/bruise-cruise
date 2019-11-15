@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 3802344292498360693}
   - component: {fileID: 3802344292498360695}
   - component: {fileID: 4640423733430902499}
+  - component: {fileID: -419697349092198337}
   m_Layer: 0
   m_Name: Chad
   m_TagString: Untagged
@@ -671,6 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpForce: 10
+  jumpLength: 0
 --- !u!114 &3802344292498360695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,6 +699,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   L_Hitbox: {fileID: 3677348936152246203}
   R_Hitbox: {fileID: 4897741186688026858}
+--- !u!114 &-419697349092198337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802344292498360680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2b4f938617d614fa34ef113dc54b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3810622152892924348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +1749,7 @@ BoxCollider:
   m_GameObject: {fileID: 8510826420407476950}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
