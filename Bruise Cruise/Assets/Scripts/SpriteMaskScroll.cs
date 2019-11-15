@@ -9,7 +9,7 @@ public class SpriteMaskScroll : MonoBehaviour
     private int endPos;
     void Start()
     {
-        startPos = (int)transform.position.y;
+        startPos = (int)transform.localPosition.y;
         endPos = startPos + 95;
     }
 
@@ -28,30 +28,30 @@ public class SpriteMaskScroll : MonoBehaviour
 
     void increaseDrunk(int value)
     {
-        if (transform.position.y >= startPos)
+        if (transform.localPosition.y >= startPos)
         {
-            if (transform.position.y + value > endPos)
+            if (transform.localPosition.y + value > endPos)
             {
-                transform.position = new Vector3(transform.position.x, endPos, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, endPos, transform.localPosition.z);
             }
             else
             {
-                transform.position = transform.position + new Vector3(0, value, 0);
+                transform.localPosition = transform.localPosition + new Vector3(0, value, 0);
             }
         }
     }
 
     void decreaseDrunk(int value)
     {
-        if (transform.position.y <= endPos)
+        if (transform.localPosition.y <= endPos)
         {
-            if (transform.position.y - value < startPos)
+            if (transform.localPosition.y - value < startPos)
             {
-                transform.position = new Vector3(transform.position.x,startPos,transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x,startPos,transform.localPosition.z);
             }
             else
             {
-                transform.position = transform.position - new Vector3(0, value, 0);
+                transform.localPosition = transform.localPosition - new Vector3(0, value, 0);
             }
         }
     }

@@ -7,17 +7,12 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     public Transform Hurtbox;
 
     MotionSM motionSM = new MotionSM();
-    MovementState movementState = new MovementState();
-    AttackState attackState = new AttackState();
-    StaggerState staggerState = new StaggerState();
-    RunningState runningState = new RunningState();
-    JumpingState jumpingState = new JumpingState();
-    FallingState fallingState = new FallingState();
+    SMContainer<MotionSM> MotionSMContainer;
 
+    //create AI state machine
     ThotSM thotSM = new ThotSM();
-    CombatThot combatThot = new CombatThot();
-    ChasingThot chasingThot = new ChasingThot();
-    PatrollingThot patrollingThot = new PatrollingThot();
+    SMContainer<ThotSM> ThotSMContainer;
+
 
     Rigidbody2D rb2d;
 
@@ -27,17 +22,19 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     [SerializeField]
     private int health = 5;
 
+    //enemy takes damage
     public void TakeDamage()
     {
         
-        if (motionSM.CurrentSubState != staggerState)
+        if (MotionSMContainer.getActiveStates().Contains("stagger"))
         {
             //take that bitch health away
             health--;
             // if the health is zero or below, kill it
-            if (health <= 0) this.gameObject.SetActive(false);
+            if (health <= 0) gameObject.SetActive(false);
         }
-        motionSM.updateState("stagger");
+        anim.Play("Damage1");
+        MotionSMContainer.forceState("stagger");
     }
 
     void Awake()
@@ -46,33 +43,42 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
         thotSM.Hurtbox = Hurtbox;
 
         #region assemble motionSM
-        motionSM.addSubState("movement", movementState);
-        motionSM.addSubState("attacking", attackState);
-        motionSM.addSubState("stagger", staggerState);
-        movementState.addSubState("running", runningState);
-        movementState.addSubState("jumping", jumpingState);
-        movementState.addSubState("falling", fallingState);
+        //create the entire motion state machine
+        MotionSMContainer = new SMContainer<MotionSM>("MotionSM", motionSM, new List<SMContainer<MotionSM>>()
+        {
+            new SMContainer<MotionSM>("movement", new MovementState(), new List<SMContainer<MotionSM>>()
+            {
+                new SMContainer<MotionSM>("running", new RunningState(), null),
+                new SMContainer<MotionSM>("jumping", new JumpingState(), null),
+                new SMContainer<MotionSM>("falling", new FallingState(), null)
+            }),
+            new SMContainer<MotionSM>("attacking", new AttackState(), null),
+            new SMContainer<MotionSM>("stagger", new StaggerState(), null)
+        });
 
-        movementState.setOwner(motionSM);
-        attackState.setOwner(motionSM);
-        staggerState.setOwner(motionSM);
-        runningState.setOwner(motionSM);
-        jumpingState.setOwner(motionSM);
-        fallingState.setOwner(motionSM);
+        //assemble and connect the motion state machine
+        foreach (SMContainer<MotionSM> container in MotionSMContainer.ReturnAllSubStates())
+        {
+            container.State.setOwner(motionSM);
+        }
+        MotionSMContainer.assemble();
 
-        motionSM.setDefaultSubState("movement");
-        movementState.setDefaultSubState("running");
         #endregion
         #region assemble thotSM
-        thotSM.addSubState("combat", combatThot);
-        thotSM.addSubState("chasing", chasingThot);
-        thotSM.addSubState("patrolling", patrollingThot);
+        //create the entire motion state machine
+        ThotSMContainer = new SMContainer<ThotSM>("ThotSM", thotSM, new List<SMContainer<ThotSM>>
+        {
+            new SMContainer<ThotSM>("patrolling", new PatrollingThot(), null),
+            new SMContainer<ThotSM>("chasing", new ChasingThot(), null),
+            new SMContainer<ThotSM>("combat", new CombatThot(), null)
+        });
 
-        combatThot.setOwner(thotSM);
-        chasingThot.setOwner(thotSM);
-        patrollingThot.setOwner(thotSM);
-
-        thotSM.setDefaultSubState("patrolling");
+        //assemble and connect the AI state machine
+        foreach (SMContainer<ThotSM> container in ThotSMContainer.ReturnAllSubStates())
+        {
+            container.State.setOwner(thotSM);
+        }
+        ThotSMContainer.assemble();
         #endregion
     }
 
@@ -81,17 +87,21 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        motionSM.EnterState();
+
+        //not super necessary in most cases but it usually heklps with weird bugs
+        MotionSMContainer.State.EnterState();
         thotSM.EnterState();
     }
 
     // Update is called once per frame
     void Update()
     {
-        motionSM.self = new Vector2(transform.position.x, transform.position.y);
-        thotSM.self = new Vector2(transform.position.x, transform.position.y);
-        thotSM.player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
-        //rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2d.velocity.y);
+        Vector3 selfPosition = transform.position;
+        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
+
+        motionSM.self = new Vector2(selfPosition.x, selfPosition.y);
+        thotSM.self = new Vector2(selfPosition.x, selfPosition.y);
+        thotSM.player = new Vector2(playerPosition.x, playerPosition.y);
         rb2d.velocity = new Vector3(motionSM.velocity.x, rb2d.velocity.y, 0);
 
         motionSM.isAttacking = thotSM.isAttacking;
@@ -108,11 +118,6 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
         if (motionSM.velocity.x > 1)
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        }
-
-        if (motionSM.CurrentSubState == staggerState)
-        {
-            anim.Play("Damage1");
         }
     }
 }
