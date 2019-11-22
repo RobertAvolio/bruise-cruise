@@ -672,8 +672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 10
-  jumpLength: 0
+  jumpForce: 15
+  jumpLength: 0.25
 --- !u!114 &3802344292498360695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,8 +698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16eac2697ba4f064a998c07d6a1417f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  L_Hitbox: {fileID: 3677348936152246203}
-  R_Hitbox: {fileID: 4897741186688026858}
+  L_Hitbox: {fileID: 0}
+  R_Hitbox: {fileID: 0}
 --- !u!114 &-419697349092198337
 MonoBehaviour:
   m_ObjectHideFlags: 0
