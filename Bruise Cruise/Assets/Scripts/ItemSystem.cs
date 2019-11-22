@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ItemSystem : MonoBehaviour
 {
-    public Sprite fireBall;
     public Sprite itemFiller;
-    public Sprite wine;
     private Sprite[] itemsHeld = new Sprite[4];
     private int itemSelected = 0;
     // Start is called before the first frame update
@@ -87,6 +85,31 @@ public class ItemSystem : MonoBehaviour
         }
     }
 
+    public void addPowerUp(Sprite power)
+    {
+        int added = 0;
+        while (added < 4) //Checks to see all the item slots are filled or not
+        {
+            if (itemsHeld[itemSelected] == itemFiller)
+            {
+                itemsHeld[itemSelected] = power;
+                added = 4;
+            }
+            else
+            {
+                itemSelected += 1;
+                if (itemSelected > 3)
+                {
+                    itemSelected = 0;
+                }
+                added++; //If all item slots taken up, nothing happens.
+            }
+        }
+        this.gameObject.GetComponent<Image>().sprite = itemsHeld[itemSelected];
+    }
+
+
+    /*
     //Adds fireball to itemlist (Copy paste this method and replace (fireball) sprite if any more types of items want to be added
     void addFireBall()
     {
@@ -133,9 +156,9 @@ public class ItemSystem : MonoBehaviour
         }
         this.gameObject.GetComponent<Image>().sprite = itemsHeld[itemSelected];
     }
-
+    
     //Removes current item selected and defaults to your next available item
-    void removeItem()
+    public void removeItem()
     {
         itemsHeld[itemSelected] = itemFiller;
         if (itemsHeld[itemSelected] == itemFiller)
@@ -159,5 +182,5 @@ public class ItemSystem : MonoBehaviour
             }
         }
         this.gameObject.GetComponent<Image>().sprite = itemsHeld[itemSelected];
-    }
+    }*/
 }

@@ -19,7 +19,7 @@ public class SpriteMaskScroll : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K))
         {
             decreaseDrunk(5);
-        }
+        }   
         if (Input.GetKeyDown(KeyCode.L))
         {
             increaseDrunk(5);
