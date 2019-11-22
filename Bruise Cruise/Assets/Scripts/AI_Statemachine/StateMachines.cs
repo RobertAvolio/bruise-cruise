@@ -41,6 +41,12 @@ namespace StateMachineStuff
         //the state first entered when the game starts
         protected string defaultSubState;
 
+        //retuyrns the current substate
+        public string getCurrentSubState()
+        {
+            return CurrentSubState;
+        }
+
         //sets the owner
         public void setOwner(T owner)
         {
@@ -161,7 +167,7 @@ namespace StateMachineStuff
         //returns the container of the current active substate
         public SMContainer<T> getActiveChild()
         {
-            return Children?[State.CurrentSubState];
+            return Children?[State.getCurrentSubState()];
         }
 
         //return a list of all the active states in the tree, probably acts a little fucky if the container it's called on isn't active
