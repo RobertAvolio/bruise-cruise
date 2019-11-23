@@ -2743,6 +2743,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: orthographic size
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1838877889024829849, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
       propertyPath: m_Name
@@ -2808,6 +2813,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5739780577136223183, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: effectMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1462a3aca45b2a94ea6edec8a78f88e8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f41b82cca4e203b4fadb8e131bdcbf1a, type: 3}
 --- !u!1001 &1058984342
@@ -2912,16 +2922,6 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 25752a69815587d49a0cdf0c59e74c85, type: 2}
-    - target: {fileID: 3802344292498360693, guid: 23d0273843366ef41a181404d8dcb57e,
-        type: 3}
-      propertyPath: jumpForce
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3802344292498360693, guid: 23d0273843366ef41a181404d8dcb57e,
-        type: 3}
-      propertyPath: jumpLength
-      value: 0.25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23d0273843366ef41a181404d8dcb57e, type: 3}
 --- !u!1 &1080461279 stripped
