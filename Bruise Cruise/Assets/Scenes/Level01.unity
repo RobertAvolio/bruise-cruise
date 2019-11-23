@@ -878,7 +878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee956a674719434186486722257141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxUses: 5
+  maxTime: 10
+  sprite: {fileID: 21300000, guid: 5e2e0b9dc0646824da29a214824e5cec, type: 3}
+  itemSystem: {fileID: 681781878}
   fireballPrefab: {fileID: 3340536836811065186, guid: 73c3f5155b6c01a4592f59ca102054b3,
     type: 3}
   player: {fileID: 1985165746}
@@ -1809,6 +1811,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77c5f2f39ce3d764facd630ed4b0c917, type: 3}
+--- !u!114 &681781878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5185081417560104083, guid: 2977fee39a05c4446a9706f5b4ede741,
+    type: 3}
+  m_PrefabInstance: {fileID: 1485360384}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d8a6be2c24e6143a3466e5fb0399fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &699826292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,6 +2753,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ben's Special Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: orthographic size
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1838877889024829852, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3558,6 +3577,11 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185081416224234469, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5185081416415762874, guid: 2977fee39a05c4446a9706f5b4ede741,
         type: 3}
       propertyPath: m_IsActive
@@ -3586,6 +3610,31 @@ PrefabInstance:
     - target: {fileID: 5185081416513111923, guid: 2977fee39a05c4446a9706f5b4ede741,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185081416609822144, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185081417731617466, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185081417560104087, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185081417560104084, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185081417560104086, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3902,7 +3951,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189f95fb6d2b1c341a610264e74e74a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxUses: 20
+  maxTime: 12
+  sprite: {fileID: 0}
+  itemSystem: {fileID: 681781878}
   limePrefab: {fileID: 8404418495103141212, guid: ee1fb6b7883b1354ca1d3f1cf184769f,
     type: 3}
   player: {fileID: 1985165746}

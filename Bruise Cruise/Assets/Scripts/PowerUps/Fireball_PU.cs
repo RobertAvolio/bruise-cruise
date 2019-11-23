@@ -19,7 +19,6 @@ public class Fireball_PU : PowerUp
         {
             Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
             Instantiate(fireballPrefab, spawnPos, player.transform.rotation);
-            Use();
             timer = timeBetweenAttack;
         } else
         {

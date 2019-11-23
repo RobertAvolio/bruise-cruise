@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 //all the stuff you would need to build a state, and then a state machine
-//TODO: figure out default substates, States should easily have them set when the statemachine is being assembled, and should run their enter function when the game starts
+//TODO: Fix how the containers don't get parents, clean up all my null checks
 namespace StateMachineStuff
 {
     //Generic state class that all states and state machines inherit from
@@ -167,7 +167,12 @@ namespace StateMachineStuff
         //returns the container of the current active substate
         public SMContainer<T> getActiveChild()
         {
-            return Children?[State.getCurrentSubState()];
+            string activeChild = State.getCurrentSubState();
+            if (activeChild != null)
+            {
+                return Children[activeChild];
+            }
+            return null;
         }
 
         //return a list of all the active states in the tree, probably acts a little fucky if the container it's called on isn't active
@@ -175,8 +180,18 @@ namespace StateMachineStuff
         {
             List<string> activeStates = new List<string>() { Name };
 
-            activeStates.Add(getActiveChild().Name);
-            activeStates.AddRange(getActiveChild().getActiveStates());
+            SMContainer<T> activeChild = getActiveChild();
+            List<string> activeChildStates = activeChild?.getActiveStates();
+
+            if (activeChild != null)
+            {
+                activeStates.Add(activeChild.Name);
+            }
+
+            if (activeChildStates != null)
+            {
+                activeStates.AddRange(activeChildStates);
+            }
 
             return activeStates;
         }
