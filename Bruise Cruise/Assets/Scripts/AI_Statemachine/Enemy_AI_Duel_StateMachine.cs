@@ -25,7 +25,8 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     //enemy takes damage
     public void TakeDamage()
     {
-        
+
+        List<string> activeStates = MotionSMContainer.getActiveStates();
         if (MotionSMContainer.getActiveStates().Contains("stagger"))
         {
             //take that bitch health away
