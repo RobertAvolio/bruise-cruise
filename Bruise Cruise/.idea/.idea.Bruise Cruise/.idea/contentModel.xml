@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\benmo\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\benmo\.Rider2019.2\system\resharper-host\Local\Transient\ReSharperHost\v192\SolutionCaches\_Bruise Cruise.-1744797407.00" t="ExcludeRecursive" />
-    <e p="D:\UMBC GDC\Bruise_Cruise\Bruise Cruise" t="IncludeRecursive">
+    <e p="C:\Users\benmo\.Rider2019.2\system\resharper-host\Local\Transient\ReSharperHost\v192\SolutionCaches\_Bruise Cruise.1439708783.00" t="ExcludeRecursive" />
+    <e p="D:\UMBC GDC\bruise-cruise\Bruise Cruise" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Audio" t="Include">
@@ -31,6 +31,7 @@
           <e p="ItemSystem.cs" t="Include" />
           <e p="LevelChange.cs" t="Include" />
           <e p="MenuShipBobbing.cs" t="Include" />
+          <e p="Navigation.cs" t="Include" />
           <e p="Pickup.cs" t="Include" />
           <e p="PlayerCombatSystem.cs" t="Include" />
           <e p="PlayerInputTimer.cs" t="Include" />
