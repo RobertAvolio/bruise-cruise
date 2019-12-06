@@ -103,9 +103,14 @@ namespace StateMachineStuff
         //reparent the container
         public void setParent(SMContainer<T> parent)
         {
-            Parent?.Children.Remove(Name);
-            Parent = parent;
-            parent.Children.Add(Name, this);
+            if (Parent == null & parent.Children.ContainsValue(this))
+                Parent = parent;
+            else
+            {
+                Parent.Children.Remove(Name);
+                Parent = parent;
+                parent.Children.Add(Name, this);
+            }
         }
 
         //return the parent container
@@ -135,10 +140,13 @@ namespace StateMachineStuff
                 State.setDefaultSubState(children[0].Name);
 
             Children = new Dictionary<string, SMContainer<T>>();
-            children?.ForEach(child =>
+            if (children != null)
             {
-                Children.Add(child.Name, child);
-            });
+                foreach (SMContainer<T> child in children)
+                {
+                    Children.Add(child.Name, child);
+                }
+            }
         }
 
         //return a list of all the states in the tree, inculding itself     R E C U R S I V E L Y
@@ -154,7 +162,7 @@ namespace StateMachineStuff
             return statesList;
         }
 
-        //add the necessary substates and set the owners for each state and container in the tree
+        //add the necessary substates and set the owners for each state in the tree
         public void assemble()
         {
             foreach (KeyValuePair<string, SMContainer<T>> child in Children)
@@ -180,18 +188,17 @@ namespace StateMachineStuff
         {
             List<string> activeStates = new List<string>() { Name };
 
-            SMContainer<T> activeChild = getActiveChild();
-            List<string> activeChildStates = activeChild?.getActiveStates();
-
-            if (activeChild != null)
-            {
-                activeStates.Add(activeChild.Name);
-            }
+            List<string> activeChildStates = getActiveChild()?.getActiveStates();
 
             if (activeChildStates != null)
             {
                 activeStates.AddRange(activeChildStates);
             }
+
+            //if (activeChildStates != null)
+            //{
+            //    activeStates.AddRange(activeChildStates);
+            //}
 
             return activeStates;
         }
@@ -211,7 +218,8 @@ namespace StateMachineStuff
         {
             if (!getActiveStates().Contains(state))
             {
-                State<T> parentState = getState(state).Parent.State;
+                SMContainer<T> stateContainer = getState(state);
+                State<T> parentState = stateContainer.Parent.State;
                 parentState.updateState(state);
             }
         }
