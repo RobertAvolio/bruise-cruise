@@ -593,6 +593,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ben's Special Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.91372555
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.909804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.909804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1838877889024829852, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -651,31 +676,6 @@ PrefabInstance:
     - target: {fileID: 1838877889024829852, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: orthographic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.91372555
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.909804
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.909804
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: m_ClearFlags
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1149,6 +1149,7 @@ GameObject:
   - component: {fileID: 1674751332}
   - component: {fileID: 1674751331}
   - component: {fileID: 1674751334}
+  - component: {fileID: 1674751335}
   m_Layer: 5
   m_Name: Start Game Button
   m_TagString: Untagged
@@ -1218,7 +1219,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2023601917}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1674751335}
+        m_MethodName: loadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Level01
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1674751332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1267,6 +1279,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02794df5ed7e35f42a2843d575abd252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1674751335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674751329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2418140c92cddc64a8f06b8668b398f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  confirmButtons: {fileID: 0}
+  mainButtons: {fileID: 0}
 --- !u!1 &2023601915
 GameObject:
   m_ObjectHideFlags: 0
