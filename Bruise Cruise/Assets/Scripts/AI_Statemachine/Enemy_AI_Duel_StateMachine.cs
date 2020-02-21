@@ -27,15 +27,15 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
     {
 
         List<string> activeStates = MotionSMContainer.getActiveStates();
-        if (MotionSMContainer.getActiveStates().Contains("stagger"))
+        if (!activeStates.Contains("stagger"))
         {
             //take that bitch health away
             health--;
             // if the health is zero or below, kill it
             if (health <= 0) gameObject.SetActive(false);
+            anim.Play("Damage1");
+            MotionSMContainer.forceState("stagger");
         }
-        anim.Play("Damage1");
-        MotionSMContainer.forceState("stagger");
     }
 
     void Awake()
