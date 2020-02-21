@@ -26,3 +26,29 @@ public class FIsh_AI : MonoBehaviour
         
     }
 }
+
+//just cycles through the list of actions
+#region ThotSM
+class FishThotSM : State<ThotSM>
+{
+    //index of the current action in the action list
+    
+    public override void EnterState()
+    {
+        base.EnterState();
+    }
+
+    public override string RunState()
+    {
+        return null;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+    }
+}
+#endregion
+
+#region motionSM
+#endregion
