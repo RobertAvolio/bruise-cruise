@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ItemSystem : MonoBehaviour
 {
+    public PowerUpInteractions PU;
     public Sprite itemFiller;
     private Sprite[] itemsHeld = new Sprite[4];
     private int itemSelected = 0;
@@ -51,6 +52,7 @@ public class ItemSystem : MonoBehaviour
                 }
             }
             this.gameObject.GetComponent<Image>().sprite = itemsHeld[itemSelected];
+            PU.SetPowerIndex(itemSelected);
         }
 
         if (Input.GetKeyDown(KeyCode.L)) //Rotates to next item right, bind input controls as needed
@@ -82,6 +84,7 @@ public class ItemSystem : MonoBehaviour
 
             }
             this.gameObject.GetComponent<Image>().sprite = itemsHeld[itemSelected];
+            PU.SetPowerIndex(itemSelected);
         }
     }
 

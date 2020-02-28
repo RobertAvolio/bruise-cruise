@@ -17,11 +17,11 @@ public class PowerUpInteractions : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown("x") && currentPowerIndex != -1) // checking if the index doesn't equal -1 to check if one has been added or not
+        if(currentPowerIndex != -1) // checking if the index doesn't equal -1 to check if one has been added or not
         {
-            powerUps[currentPowerIndex].Use();
-            //Use();  much more complicated. Need to directly addess the CURRENT powerup selected in the selector wheel. Need to use ItemSystem maybe? Maybe a redesign?
+            powerUps[currentPowerIndex].on = true;
         }
+        
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,9 +37,14 @@ public class PowerUpInteractions : MonoBehaviour
     {
         if (numPowers != SIZE)
         {
+            if(currentPowerIndex != -1)
+            {
+                powerUps[currentPowerIndex].on = false;
+            }
             powerUps[numPowers] = p;
             numPowers++;
             currentPowerIndex = numPowers - 1;
+
         }
         else
         {
@@ -47,4 +52,12 @@ public class PowerUpInteractions : MonoBehaviour
         }
 
     }
+
+    public void SetPowerIndex(int n)
+    {
+        powerUps[currentPowerIndex].on = false;
+        currentPowerIndex = n;
+    }
+
+    
 }

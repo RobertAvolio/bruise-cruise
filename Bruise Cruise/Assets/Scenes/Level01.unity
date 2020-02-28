@@ -878,6 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee956a674719434186486722257141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 0
   maxTime: 10
   sprite: {fileID: 21300000, guid: 5e2e0b9dc0646824da29a214824e5cec, type: 3}
   itemSystem: {fileID: 681781878}
@@ -2743,15 +2744,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
-        type: 3}
-      propertyPath: orthographic size
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 1838877889024829849, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
       propertyPath: m_Name
       value: Ben's Special Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
+        type: 3}
+      propertyPath: orthographic size
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1838877889024829851, guid: f41b82cca4e203b4fadb8e131bdcbf1a,
         type: 3}
@@ -3467,6 +3468,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5185081417560104083, guid: 2977fee39a05c4446a9706f5b4ede741,
+        type: 3}
+      propertyPath: PU
+      value: 
+      objectReference: {fileID: 1985165747}
     - target: {fileID: 5185081416224234468, guid: 2977fee39a05c4446a9706f5b4ede741,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3951,6 +3957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189f95fb6d2b1c341a610264e74e74a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 0
   maxTime: 12
   sprite: {fileID: 0}
   itemSystem: {fileID: 681781878}
@@ -4535,6 +4542,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1058984342}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1985165747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3802344292498360695, guid: 23d0273843366ef41a181404d8dcb57e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058984342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985165746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b86b6fac2b85244a37fcac46b84698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1994513887
 PrefabInstance:
   m_ObjectHideFlags: 0

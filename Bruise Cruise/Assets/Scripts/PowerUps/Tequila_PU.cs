@@ -21,7 +21,7 @@ public class Tequila_PU : PowerUp
     // Update is called once per frame
     void Update()
     {
-        if (attackTimer <= 0 && (on && (Input.GetKeyDown("q") || Input.GetKeyDown("joystick button 3"))))
+        if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
         {
             if (player.transform.eulerAngles.y >= 180 && spawnDistanceX > 0)
             {

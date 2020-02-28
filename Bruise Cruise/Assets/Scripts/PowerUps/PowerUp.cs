@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour
 {
-    protected bool on = false;
+    public bool on = false;
     protected bool sick = false;
     protected float timer;
     protected float alcoholContent;
@@ -23,11 +23,10 @@ public abstract class PowerUp : MonoBehaviour
     }
     private void Update()
     {
-        print("Content: " + alcoholContent);
-        if(timer >= 0)
+        if (timer >= 0)
         {
             timer -= Time.deltaTime;
-        } else
+        } else if (alcoholContent > 0)
         {
             alcoholContent -= Time.deltaTime;
         }
@@ -49,7 +48,6 @@ public abstract class PowerUp : MonoBehaviour
     {
         alcoholContent += DRINK_INCREASE;
         timer = maxTime;
-        print("Content: " + alcoholContent);
         if (alcoholContent >= CONTENT_MAX) 
         {
             alcoholContent = 0;
