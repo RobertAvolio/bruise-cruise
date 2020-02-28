@@ -25,6 +25,7 @@ public class Fish_AI : MonoBehaviour
     public float attackJumpForce = 3f, attackAnticipation = 0.5f;
 
     private Rigidbody2D rb2d;
+    private Animator anim;
     private Vector3 selfPosition;
     private Transform player;
 
@@ -56,12 +57,14 @@ public class Fish_AI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
+        anim = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         position1 = rb2d.position;
         position2 = position1 + jumpOffset;
 
         fishSM.self = transform;
         fishSM.player = player;
+        fishSM.animator = anim;
         fishSM.agroDist = agroDist;
         fishSM.pos1 = new Vector2(transform.position.x, transform.position.y);
         fishSM.pos2 = new Vector2(transform.position.x + jumpOffset.x, transform.position.y + jumpOffset.y);
@@ -83,10 +86,11 @@ public class Fish_AI : MonoBehaviour
     //just cycles through the list of actions
     class FishSM : State<FishSM>
     {
-        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 1;
+        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 0.75f, animSpeed;
 
         public bool isAgro;
 
+        public Animator animator;
         public Transform player, self;
         public Vector2 velocity;
 
@@ -100,6 +104,19 @@ public class Fish_AI : MonoBehaviour
 
         public override void EnterState()
         {
+            //set the animation speeds
+            AnimationClip clip = null;
+            foreach(AnimationClip animClip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (animClip.name == "Armature|LeapLeft_Stationary")
+                {
+                    clip = animClip;
+                    break;
+                }
+            }
+            animSpeed = (clip.length - leapAnticipation) / (Mathf.Abs(pos1.x - pos2.x) / speed);
+            leapAnticipation /= animSpeed;
+
             isAgro = false;
             currActionIndex = 0;
             base.EnterState();
@@ -141,11 +158,16 @@ public class Fish_AI : MonoBehaviour
             }
         }
 
+        //calculate necessary jump force to get to target position
         public float getJumpForce()
         {
             Vector2 offset = getTargetPos() - new Vector2(self.position.x, self.position.y);
             offset.x = Mathf.Abs(offset.x);
-            float jumpForce = offset.y * speed / offset.x + 0.5f * gravity * offset.x / speed;
+            if (offset.x == 0)
+            {
+                return 0;
+            }
+            float jumpForce = (offset.y * speed / offset.x) + (0.5f * gravity * offset.x / speed);
             return jumpForce;
         }
     }
@@ -155,27 +177,54 @@ public class Fish_AI : MonoBehaviour
         private float timer;
         public override void EnterState()
         {
-            print("IDLE");
+            if (Owner.isAgro)
+            {
+                //start the animation for the next move
+                action nextAction = Owner.getNextAction();
+                switch (nextAction)
+                {
+                    case action.pos1:
+                        Owner.animator.Play("LeapLeft_Stationary", 0, 0);
+                        Owner.animator.speed = Owner.animSpeed;
+                        print("HIT");
+                        break;
+                    case action.pos2:
+                        Owner.animator.Play("LeapRight_Stationary", 0, 0);
+                        Owner.animator.speed = Owner.animSpeed;
+                        print("HIT");
+                        break;
+                    case action.attack:
+                        Owner.animator.Play("LeapUpAttack_Stationary", 0, 0);
+                        Owner.animator.speed = 1f;
+                        print("HIT");
+                        break;
+                }
+            }
+            else
+                Owner.animator.Play("Idle");
             timer = 0;
             base.EnterState();
         }
 
         public override string RunState()
         {
+
             Owner.velocity = new Vector2(0, 0);
             if ((Owner.player.position - Owner.self.position).magnitude < Owner.agroDist || Owner.isAgro)
             {
                 timer += Time.deltaTime;
                 if(timer > Owner.leapAnticipation)
                 {
+                    //go to the next action in the sequence
                     action nextAction = Owner.nextAction();
-                    if(nextAction == action.pos1 || nextAction == action.pos2)
+                    switch (nextAction)
                     {
-                        return "move";
-                    }
-                    else
-                    {
-                        return "attack";
+                        case action.pos1:
+                            return "move";
+                        case action.pos2:
+                            return "move";
+                        case action.attack:
+                            return "attack";
                     }
                 }
             }
@@ -208,8 +257,6 @@ public class Fish_AI : MonoBehaviour
 
             if(targetPos.y >= Owner.self.position.y && Mathf.Abs(targetPos.x - Owner.self.position.x) < Owner.posThreshold)
             {
-                print("HIT");
-
                 return "idle";
             }
 

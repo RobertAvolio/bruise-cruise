@@ -521,15 +521,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6104902213530763727, guid: ad1802f698f8a7e4583158115385ddce,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6670145812771543207, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: m_Name
       value: Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104902213530763727, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
@@ -609,7 +609,7 @@ PrefabInstance:
     - target: {fileID: 6670145812771543202, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.2
+      value: -15.29
       objectReference: {fileID: 0}
     - target: {fileID: 6670145812771543202, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
@@ -655,6 +655,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055496919499791607, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055496919499791607, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055496919499791607, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: attackAnticipation
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: attackJumpForce
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: actionSequence.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: jumpOffset.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: jumpOffset.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000357015476021572, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: fishSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766356391493809477, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad1802f698f8a7e4583158115385ddce, type: 3}
