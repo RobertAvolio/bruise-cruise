@@ -86,7 +86,7 @@ public class Fish_AI : MonoBehaviour
     //just cycles through the list of actions
     class FishSM : State<FishSM>
     {
-        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 0.75f, animSpeed;
+        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 0.65f, animSpeed;
 
         public bool isAgro;
 
@@ -291,7 +291,7 @@ public class Fish_AI : MonoBehaviour
             if(timer > Owner.attackAnticipation)
             {
                 timer = -1;
-                Owner.velocity.y = 3f;
+                Owner.velocity.y = 5f;
             }
             if(Owner.self.position.y < startHeight)
             {
