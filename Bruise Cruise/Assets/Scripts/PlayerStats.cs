@@ -19,4 +19,5 @@ public class PlayerStats : MonoBehaviour
     public static int PlayerHealth {
         get => _playerHealth;
     }
+
 }

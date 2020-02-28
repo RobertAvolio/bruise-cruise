@@ -6,7 +6,7 @@ public class Fireball_PU : PowerUp
 {
     public GameObject fireballPrefab;
     public GameObject player;
-    private float timer;
+    private float attackTimer;
 
     private float spawnDistanceX = 2;
     private float spawnDistanceY = 5;
@@ -15,14 +15,15 @@ public class Fireball_PU : PowerUp
     private float timeBetweenAttack = 2;
     void Update()
     {
-        if (timer <= 0 && (on && Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3")))
+        if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
         {
             Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
             Instantiate(fireballPrefab, spawnPos, player.transform.rotation);
-            timer = timeBetweenAttack;
+            attackTimer = timeBetweenAttack;
+            Use();
         } else
         {
-            timer -= Time.deltaTime;
+            attackTimer -= Time.deltaTime;
         }
     }
 }
