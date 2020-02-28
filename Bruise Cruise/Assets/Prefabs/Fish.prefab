@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6670145812771543202}
   - component: {fileID: 6670145812771543201}
   - component: {fileID: 6670145812771543200}
-  - component: {fileID: 1295001247875954495}
   - component: {fileID: 6104902213530763727}
   - component: {fileID: 4055496919499791607}
+  - component: {fileID: 7000357015476021572}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -81,23 +81,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670145812771543207}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1295001247875954495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6670145812771543207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55fa58e7a0f1034093a512530ee5dc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpOffset: {x: 0, y: 0, z: 0}
-  actionSequence: 0000000001000000
-  fishSpeed: 1
-  gravity: 1
-  agroDist: 5
 --- !u!50 &6104902213530763727
 Rigidbody2D:
   serializedVersion: 4
@@ -145,3 +128,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7000357015476021572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670145812771543207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55fa58e7a0f1034093a512530ee5dc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpOffset: {x: 5, y: 3, z: 0}
+  actionSequence: 02000000000000000200000001000000
+  fishSpeed: 3
+  gravity: 10
+  agroDist: 5
+  attackJumpForce: 5
+  attackAnticipation: 1

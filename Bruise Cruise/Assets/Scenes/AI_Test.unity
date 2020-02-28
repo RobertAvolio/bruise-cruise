@@ -534,12 +534,12 @@ PrefabInstance:
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: actionSequence.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: fishSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: gravity
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
@@ -569,17 +569,37 @@ PrefabInstance:
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: jumpOffset.x
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: actionSequence.Array.data[2]
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}
       propertyPath: attackJumpForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: jumpOffset.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: attackAnticipationTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: actionSequence.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295001247875954495, guid: ad1802f698f8a7e4583158115385ddce,
+        type: 3}
+      propertyPath: actionSequence.Array.data[1]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6670145812771543202, guid: ad1802f698f8a7e4583158115385ddce,
         type: 3}

@@ -22,7 +22,7 @@ public class Fish_AI : MonoBehaviour
     public Vector3 jumpOffset;
     public List<action> actionSequence;
     public float fishSpeed = 1f, gravity = 1f, agroDist = 5f;
-    public float attackJumpForce = 3f, attackAnticipationTime = 0.5f;
+    public float attackJumpForce = 3f, attackAnticipation = 0.5f;
 
     private Rigidbody2D rb2d;
     private Vector3 selfPosition;
@@ -66,7 +66,7 @@ public class Fish_AI : MonoBehaviour
         fishSM.pos1 = new Vector2(transform.position.x, transform.position.y);
         fishSM.pos2 = new Vector2(transform.position.x + jumpOffset.x, transform.position.y + jumpOffset.y);
         fishSM.attackJumpForce = attackJumpForce;
-        fishSM.attackAnticipationTime = attackAnticipationTime;
+        fishSM.attackAnticipation = attackAnticipation;
 
         fishSMContainer.State.EnterState();
     }
@@ -83,13 +83,16 @@ public class Fish_AI : MonoBehaviour
     //just cycles through the list of actions
     class FishSM : State<FishSM>
     {
-        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipationTime;
+        public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 1;
+
+        public bool isAgro;
 
         public Transform player, self;
         public Vector2 velocity;
 
         public Vector2 pos1, pos2;
         public List<action> sequence;
+
         //index of the current action in the action list
         private int currActionIndex;
 
@@ -97,6 +100,7 @@ public class Fish_AI : MonoBehaviour
 
         public override void EnterState()
         {
+            isAgro = false;
             currActionIndex = 0;
             base.EnterState();
         }
@@ -117,6 +121,11 @@ public class Fish_AI : MonoBehaviour
             currAction = sequence[currActionIndex];
 
             return currAction;
+        }
+
+        public action getNextAction()
+        {
+            return sequence[(currActionIndex + 1) % sequence.Count];
         }
 
         public Vector2 getTargetPos()
@@ -143,24 +152,31 @@ public class Fish_AI : MonoBehaviour
 
     class IdleState : State<FishSM>
     {
+        private float timer;
         public override void EnterState()
         {
+            print("IDLE");
+            timer = 0;
             base.EnterState();
         }
 
         public override string RunState()
         {
             Owner.velocity = new Vector2(0, 0);
-            if ((Owner.player.position - Owner.self.position).magnitude < Owner.agroDist)
+            if ((Owner.player.position - Owner.self.position).magnitude < Owner.agroDist || Owner.isAgro)
             {
-                action nextAction = Owner.nextAction();
-                if (nextAction == action.pos1 || nextAction == action.pos2)
+                timer += Time.deltaTime;
+                if(timer > Owner.leapAnticipation)
                 {
-                    return "move";
-                }
-                else
-                {
-                    return "attack";
+                    action nextAction = Owner.nextAction();
+                    if(nextAction == action.pos1 || nextAction == action.pos2)
+                    {
+                        return "move";
+                    }
+                    else
+                    {
+                        return "attack";
+                    }
                 }
             }
             return null;
@@ -168,6 +184,7 @@ public class Fish_AI : MonoBehaviour
 
         public override void ExitState()
         {
+            Owner.isAgro = true;
             base.ExitState();
         }
     }
@@ -192,17 +209,8 @@ public class Fish_AI : MonoBehaviour
             if(targetPos.y >= Owner.self.position.y && Mathf.Abs(targetPos.x - Owner.self.position.x) < Owner.posThreshold)
             {
                 print("HIT");
-                action nextAction = Owner.nextAction();
 
-                if (nextAction == action.attack)
-                {
-                    return "attack";
-                }
-                if (nextAction == action.pos1 || nextAction == action.pos2)
-                {
-                    Owner.velocity.y = Owner.getJumpForce();
-                    return "move";
-                }
+                return "idle";
             }
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
@@ -233,24 +241,14 @@ public class Fish_AI : MonoBehaviour
         {
             if(timer != -1) { }
                 timer += Time.deltaTime;
-            if(timer > Owner.attackAnticipationTime)
+            if(timer > Owner.attackAnticipation)
             {
                 timer = -1;
                 Owner.velocity.y = 3f;
             }
             if(Owner.self.position.y < startHeight)
             {
-                action nextAction = Owner.nextAction();
-
-                if (nextAction == action.attack)
-                {
-                    Owner.velocity.y = Owner.attackJumpForce;
-                    return "attack";
-                }
-                if (nextAction == action.pos1 || nextAction == action.pos2)
-                {
-                    return "move";
-                }
+                return "idle";
             }
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
