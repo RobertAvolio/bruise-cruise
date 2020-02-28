@@ -10,7 +10,8 @@ public class Navigation : MonoBehaviour
     private float timer;
     private const int START = 0;
     private const float TIMER_LENGTH = 0.2f;
-    void Awake()
+    
+    private void Awake()
     {
         // Start at the position of the first level by default
         currentPosition = 0;
@@ -25,14 +26,13 @@ public class Navigation : MonoBehaviour
         var moveScreen = Input.GetAxisRaw("Horizontal");
 
         // Moving down the level list
-        if (moveScreen == 1 && timer <= 0)
+        if (moveScreen >= 1 && timer <= 0)
         {
             // Won't go past the end of the list
             if (currentPosition + 1 != levels.Count)
             {
                 currentPosition++;
                 ChangeLevel(currentPosition);
-                print(currentPosition);
                 timer = TIMER_LENGTH;
             }
             // Goes past, wrap around to begin of list
@@ -40,21 +40,19 @@ public class Navigation : MonoBehaviour
             {
                 currentPosition = START;
                 ChangeLevel(currentPosition);
-                print(currentPosition);
                 timer = TIMER_LENGTH;
             }
             
         }
 
         // Moving up the level list
-        if (moveScreen == -1 && timer <= 0)
+        if (moveScreen <= -1 && timer <= 0)
         {
             // Won't go past the beginning of the list
             if (currentPosition - 1 != START - 1)
             {
                 currentPosition--;
                 ChangeLevel(currentPosition);
-                print(currentPosition);
                 timer = TIMER_LENGTH;
             }
             // Goes past, wrap around to end of list
@@ -62,7 +60,6 @@ public class Navigation : MonoBehaviour
             {
                 currentPosition = levels.Count - 1;
                 ChangeLevel(currentPosition);
-                print(currentPosition);
                 timer = TIMER_LENGTH;
             }
         }
@@ -70,7 +67,10 @@ public class Navigation : MonoBehaviour
 
     private void ChangeLevel(int next)
     {
+        print($"Current position: {transform.position}");
+        print($"Next position: {levels[next].position}");
         transform.position = levels[next].position;
         transform.LookAt(levels[next]);
+        
     }
 }
