@@ -8,7 +8,7 @@ public abstract class PowerUp : MonoBehaviour
     protected bool sick = false;
     protected float timer;
     protected float alcoholContent;
-    private const float DRINK_INCREASE = 5;
+    private const float DRINK_INCREASE = 20; // change to a smaller value, only this high when debugging.
     private const float CONTENT_MAX = 100;
     [SerializeField]
     protected int maxTime;
@@ -23,13 +23,15 @@ public abstract class PowerUp : MonoBehaviour
     }
     private void Update()
     {
+        print("Content: " + alcoholContent);
         if(timer >= 0)
         {
             timer -= Time.deltaTime;
         } else
         {
-            on = false;
+            alcoholContent -= Time.deltaTime;
         }
+        
     }
 
     public void StartPowerUp()
@@ -40,14 +42,15 @@ public abstract class PowerUp : MonoBehaviour
         //disable mesh renderer, collider 
         this.gameObject.GetComponent<Collider2D>().enabled = false;
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        on = true;
     }
 
     public void Use()
     {
-        on = true;
-        timer = maxTime;
         alcoholContent += DRINK_INCREASE;
-        if(alcoholContent >= CONTENT_MAX) 
+        timer = maxTime;
+        print("Content: " + alcoholContent);
+        if (alcoholContent >= CONTENT_MAX) 
         {
             alcoholContent = 0;
             //barf animation

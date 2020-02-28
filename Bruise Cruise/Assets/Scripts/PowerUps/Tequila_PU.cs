@@ -9,7 +9,7 @@ public class Tequila_PU : PowerUp
     public GameObject controller;
     private float spawnDistanceX = 8f;
     private float spawnDistanceY = 0f;
-    private float timer;
+    private float attackTimer;
     [SerializeField]
     private float timeBetweenAttack = 0f;
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class Tequila_PU : PowerUp
     // Update is called once per frame
     void Update()
     {
-        if (timer <= 0 && (on && Input.GetKeyDown("q") || Input.GetKeyDown("joystick button 3")))
+        if (attackTimer <= 0 && (on && (Input.GetKeyDown("q") || Input.GetKeyDown("joystick button 3"))))
         {
             if (player.transform.eulerAngles.y >= 180 && spawnDistanceX > 0)
             {
@@ -37,11 +37,11 @@ public class Tequila_PU : PowerUp
             
             Use();
 
-            timer = timeBetweenAttack; // i have no idea why timebetweenattack doesn't do anything when changed. 1000 is the same as 0.
+            attackTimer = timeBetweenAttack; // i have no idea why timebetweenattack doesn't do anything when changed. 1000 is the same as 0.
         }
         else
         {
-            timer -= Time.deltaTime;
+            attackTimer -= Time.deltaTime;
         }
     }
 }
