@@ -23,6 +23,7 @@ public class Fish_AI : MonoBehaviour
     public List<action> actionSequence;
     public float fishSpeed = 1f, gravity = 1f, agroDist = 5f;
     public float attackJumpForce = 3f, attackAnticipation = 0.5f;
+    public Rect attackHitbox = new Rect(-4f, -1f, 8f, 2f);
 
     private Rigidbody2D rb2d;
     private Animator anim;
@@ -70,6 +71,7 @@ public class Fish_AI : MonoBehaviour
         fishSM.pos2 = new Vector2(transform.position.x + jumpOffset.x, transform.position.y + jumpOffset.y);
         fishSM.attackJumpForce = attackJumpForce;
         fishSM.attackAnticipation = attackAnticipation;
+        fishSM.attackHitbox = attackHitbox;
 
         fishSMContainer.State.EnterState();
     }
@@ -87,6 +89,7 @@ public class Fish_AI : MonoBehaviour
     class FishSM : State<FishSM>
     {
         public float posThreshold = 1, speed, gravity, agroDist, attackJumpForce, attackAnticipation, leapAnticipation = 0.65f, animSpeed;
+        public Rect attackHitbox;
 
         public bool isAgro;
 
@@ -212,6 +215,7 @@ public class Fish_AI : MonoBehaviour
             Owner.velocity = new Vector2(0, 0);
             if ((Owner.player.position - Owner.self.position).magnitude < Owner.agroDist || Owner.isAgro)
             {
+                print((Owner.player.position - Owner.self.position).magnitude);
                 timer += Time.deltaTime;
                 if(timer > Owner.leapAnticipation)
                 {
@@ -240,14 +244,18 @@ public class Fish_AI : MonoBehaviour
 
     class MoveState : State<FishSM>
     {
+        private float timer;
         public override void EnterState()
         {
             Owner.velocity.y = Owner.getJumpForce();
+            timer = Mathf.Abs(Owner.pos1.x - Owner.pos2.x) / Owner.speed;
             base.EnterState();
         }
 
         public override string RunState()
         {
+            timer -= Time.deltaTime;
+
             Vector2 targetPos = Owner.getTargetPos();
 
             if (Mathf.Sign(Owner.pos1.x - Owner.self.position.x) != Mathf.Sign(Owner.pos2.x - Owner.self.position.x) || targetPos.y < Owner.self.position.x)
@@ -258,6 +266,12 @@ public class Fish_AI : MonoBehaviour
             if(targetPos.y >= Owner.self.position.y && Mathf.Abs(targetPos.x - Owner.self.position.x) < Owner.posThreshold)
             {
                 return "idle";
+            }
+
+            //snap to target position if something didn't go right
+            if (timer <= 0)
+            {
+                Owner.self.position = new Vector2(targetPos.x, targetPos.y);
             }
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
@@ -275,12 +289,14 @@ public class Fish_AI : MonoBehaviour
     {
         private float timer;
         private float startHeight;
+        private Rect hitbox;
         public override void EnterState()
         {
             Owner.velocity.y = Owner.attackJumpForce;
             Owner.velocity.x = 0;
             startHeight = Owner.self.position.y;
             timer = 0;
+            hitbox = new Rect(0, 0, 0, 0);
             base.EnterState();
         }
 
@@ -292,10 +308,29 @@ public class Fish_AI : MonoBehaviour
             {
                 timer = -1;
                 Owner.velocity.y = 5f;
+                hitbox = Owner.attackHitbox;
             }
             if(Owner.self.position.y < startHeight)
             {
                 return "idle";
+            }
+
+            //check that the hitbox even exists anymore before running OverlapBoxAll()
+            if (!hitbox.Equals(new Rect(0, 0, 0, 0)))
+            {
+                Vector2 pos = hitbox.center + new Vector2(Owner.self.position.x, Owner.self.position.y);
+                Collider2D[] thingsHit = Physics2D.OverlapBoxAll(pos, hitbox.size, 0f);
+                foreach (Collider2D thing in thingsHit)
+                {
+                    if (thing.tag == "Player")
+                    {
+                        //clear the hitbox to prevent damage every frame
+                        hitbox = new Rect(0, 0, 0, 0);
+
+                        thing.GetComponent<PlayerStats>()?.TakeDamage();
+                    }
+                }
+
             }
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
