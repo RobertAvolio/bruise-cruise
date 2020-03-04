@@ -94,13 +94,13 @@ public class PlayerCombatSystem : MonoBehaviour
             Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(R_Hitbox.position.x, R_Hitbox.position.y),new Vector2(3, 2), 0f);
             foreach(Collider2D enemy in enemiesToDamage)
             {
-                enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+                enemy.GetComponent<Fish_AI>()?.TakeDamage();
             }
         } else {
             Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(L_Hitbox.position.x, L_Hitbox.position.y),new Vector2(3, 2), 0f);
             foreach(Collider2D enemy in enemiesToDamage)
             {
-                enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+                enemy.GetComponent<Fish_AI>()?.TakeDamage();
             }
         }
     }

@@ -30,6 +30,13 @@ public class Fish_AI : MonoBehaviour
     private Vector3 selfPosition;
     private Transform player;
 
+    
+    //take hit from the player, one hit kill so no need for health
+    public void TakeDamage()
+    {
+        fishSMContainer.forceState("dead");
+    }
+
     void Awake()
     {
         #region assemble FishSM
@@ -37,7 +44,8 @@ public class Fish_AI : MonoBehaviour
         {
             new SMContainer<FishSM>("idle", new IdleState(), null),
             new SMContainer<FishSM>("move", new MoveState(), null),
-            new SMContainer<FishSM>("attack", new AttackState(), null)
+            new SMContainer<FishSM>("attack", new AttackState(), null),
+            new SMContainer<FishSM>("dead", new DeadState(), null)
         });
 
         foreach(SMContainer<FishSM> container in fishSMContainer.ReturnAllSubStates())
@@ -58,14 +66,12 @@ public class Fish_AI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
-        anim = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         position1 = rb2d.position;
         position2 = position1 + jumpOffset;
 
-        fishSM.self = transform;
+        fishSM.setSelf(gameObject);
         fishSM.player = player;
-        fishSM.animator = anim;
         fishSM.agroDist = agroDist;
         fishSM.pos1 = new Vector2(transform.position.x, transform.position.y);
         fishSM.pos2 = new Vector2(transform.position.x + jumpOffset.x, transform.position.y + jumpOffset.y);
@@ -94,7 +100,7 @@ public class Fish_AI : MonoBehaviour
         public bool isAgro;
 
         public Animator animator;
-        public Transform player, self;
+        public Transform player;
         public Vector2 velocity;
 
         public Vector2 pos1, pos2;
@@ -103,10 +109,15 @@ public class Fish_AI : MonoBehaviour
         //index of the current action in the action list
         private int currActionIndex;
 
+        private GameObject self;
+
         action currAction;
 
         public override void EnterState()
         {
+            //set all the default values
+            animator = self.GetComponent<Animator>();
+
             //set the animation speeds
             AnimationClip clip = null;
             foreach(AnimationClip animClip in animator.runtimeAnimatorController.animationClips)
@@ -135,6 +146,16 @@ public class Fish_AI : MonoBehaviour
             base.ExitState();
         }
         
+        public void setSelf(in GameObject newSelf)
+        {
+            self = newSelf;
+        }
+
+        public ref GameObject getSelf()
+        {
+            return ref self;
+        }
+
         public action nextAction()
         {
             currActionIndex = (currActionIndex + 1) % sequence.Count;
@@ -164,7 +185,7 @@ public class Fish_AI : MonoBehaviour
         //calculate necessary jump force to get to target position
         public float getJumpForce()
         {
-            Vector2 offset = getTargetPos() - new Vector2(self.position.x, self.position.y);
+            Vector2 offset = getTargetPos() - new Vector2(self.transform.position.x, self.transform.position.y);
             offset.x = Mathf.Abs(offset.x);
             if (offset.x == 0)
             {
@@ -213,9 +234,9 @@ public class Fish_AI : MonoBehaviour
         {
 
             Owner.velocity = new Vector2(0, 0);
-            if ((Owner.player.position - Owner.self.position).magnitude < Owner.agroDist || Owner.isAgro)
+            if ((Owner.player.position - Owner.getSelf().transform.position).magnitude < Owner.agroDist || Owner.isAgro)
             {
-                print((Owner.player.position - Owner.self.position).magnitude);
+                print((Owner.player.position - Owner.getSelf().transform.position).magnitude);
                 timer += Time.deltaTime;
                 if(timer > Owner.leapAnticipation)
                 {
@@ -257,13 +278,14 @@ public class Fish_AI : MonoBehaviour
             timer -= Time.deltaTime;
 
             Vector2 targetPos = Owner.getTargetPos();
+            Transform transform = Owner.getSelf().transform;
 
-            if (Mathf.Sign(Owner.pos1.x - Owner.self.position.x) != Mathf.Sign(Owner.pos2.x - Owner.self.position.x) || targetPos.y < Owner.self.position.x)
+            if (Mathf.Sign(Owner.pos1.x - transform.position.x) != Mathf.Sign(Owner.pos2.x - transform.position.x) || targetPos.y < transform.position.x)
             {
-                Owner.velocity.x = Mathf.Sign(targetPos.x - Owner.self.position.x) * Owner.speed;
+                Owner.velocity.x = Mathf.Sign(targetPos.x - transform.position.x) * Owner.speed;
             }
 
-            if(targetPos.y >= Owner.self.position.y && Mathf.Abs(targetPos.x - Owner.self.position.x) < Owner.posThreshold)
+            if(targetPos.y >= transform.position.y && Mathf.Abs(targetPos.x - transform.position.x) < Owner.posThreshold)
             {
                 return "idle";
             }
@@ -271,7 +293,7 @@ public class Fish_AI : MonoBehaviour
             //snap to target position if something didn't go right
             if (timer <= 0)
             {
-                Owner.self.position = new Vector2(targetPos.x, targetPos.y);
+                transform.position = new Vector2(targetPos.x, targetPos.y);
             }
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
@@ -294,7 +316,7 @@ public class Fish_AI : MonoBehaviour
         {
             Owner.velocity.y = Owner.attackJumpForce;
             Owner.velocity.x = 0;
-            startHeight = Owner.self.position.y;
+            startHeight = Owner.getSelf().transform.position.y;
             timer = 0;
             hitbox = new Rect(0, 0, 0, 0);
             base.EnterState();
@@ -310,7 +332,7 @@ public class Fish_AI : MonoBehaviour
                 Owner.velocity.y = 5f;
                 hitbox = Owner.attackHitbox;
             }
-            if(Owner.self.position.y < startHeight)
+            if(Owner.getSelf().transform.position.y < startHeight)
             {
                 return "idle";
             }
@@ -318,7 +340,7 @@ public class Fish_AI : MonoBehaviour
             //check that the hitbox even exists anymore before running OverlapBoxAll()
             if (!hitbox.Equals(new Rect(0, 0, 0, 0)))
             {
-                Vector2 pos = hitbox.center + new Vector2(Owner.self.position.x, Owner.self.position.y);
+                Vector2 pos = hitbox.center + new Vector2(Owner.getSelf().transform.position.x, Owner.getSelf().transform.position.y);
                 Collider2D[] thingsHit = Physics2D.OverlapBoxAll(pos, hitbox.size, 0f);
                 foreach (Collider2D thing in thingsHit)
                 {
@@ -335,6 +357,24 @@ public class Fish_AI : MonoBehaviour
 
             Owner.velocity.y -= Owner.gravity * Time.deltaTime;
 
+            return null;
+        }
+
+        public override void ExitState()
+        {
+            base.ExitState();
+        }
+    }
+     class DeadState : State<FishSM>
+    {
+        public override void EnterState()
+        {
+            base.EnterState();
+        }
+
+        public override string RunState()
+        {
+            Owner.getSelf().SetActive(false);
             return null;
         }
 
