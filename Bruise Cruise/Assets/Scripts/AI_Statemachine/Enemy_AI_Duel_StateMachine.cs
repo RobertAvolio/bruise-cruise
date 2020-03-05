@@ -126,7 +126,7 @@ public class Enemy_AI_Duel_StateMachine : MonoBehaviour
 //Decides on a target direction to pass to motionSM and decides when to attack
 #region ThotSM
 #region tier one state
-public class ThotSM : State<ThotSM>
+class ThotSM : State<ThotSM>
 {
     [SerializeField]
     public Transform Hurtbox;
@@ -167,7 +167,7 @@ public class ThotSM : State<ThotSM>
 }
 #endregion
 #region tier two states
-public class CombatThot : State<ThotSM>
+class CombatThot : State<ThotSM>
 {
     private int combatTimer;
     public override void EnterState()
@@ -204,7 +204,7 @@ public class CombatThot : State<ThotSM>
 
 }
 
-public class PatrollingThot : State<ThotSM>
+class PatrollingThot : State<ThotSM>
 {
     public override void EnterState()
     {
@@ -227,7 +227,7 @@ public class PatrollingThot : State<ThotSM>
     }
 }
 
-public class ChasingThot : State<ThotSM>
+class ChasingThot : State<ThotSM>
 {
     public override void EnterState()
     {
@@ -260,7 +260,7 @@ public class ChasingThot : State<ThotSM>
 //the plan is for this to be general enough for any enemy to use, any kind of AI statemachine could pass a target position into it
 #region motionSM
 #region tier one state
-public class MotionSM : State<MotionSM>
+class MotionSM : State<MotionSM>
 {
     public Vector2 velocity;
     public Vector2 targetPosition;
@@ -284,7 +284,7 @@ public class MotionSM : State<MotionSM>
 #endregion
 #region tier two states
 //Enemy is running or jumping towards a target position
-public class MovementState : State<MotionSM>
+class MovementState : State<MotionSM>
 {
     public override void EnterState()
     {
@@ -308,7 +308,7 @@ public class MovementState : State<MotionSM>
 }
 
 //Enemy is in combat and attacking the player
-public class AttackState : State<MotionSM>
+class AttackState : State<MotionSM>
 {
     protected int combatTimer;
     public override void EnterState()
@@ -335,7 +335,7 @@ public class AttackState : State<MotionSM>
 }
 
 //enemy has been hit and can't do anything
-public class StaggerState : State<MotionSM>
+class StaggerState : State<MotionSM>
 {
     public int staggerTimer;
     public override void EnterState()
@@ -364,7 +364,7 @@ public class StaggerState : State<MotionSM>
 #endregion
 #region tier three states
 //Onground movement
-public class RunningState : State<MotionSM>
+class RunningState : State<MotionSM>
 {
     public override void EnterState()
     {
@@ -399,7 +399,7 @@ public class RunningState : State<MotionSM>
 }
 
 //it's fuckin jumping dude
-public class JumpingState : State<MotionSM>
+class JumpingState : State<MotionSM>
 {
     public override void EnterState()
     {
@@ -432,7 +432,7 @@ public class JumpingState : State<MotionSM>
 }
 
 //rounds out areial motion because in videogames upwards and downwards motion is different?
-public class FallingState : State<MotionSM>
+class FallingState : State<MotionSM>
 {
     public override void EnterState()
     {
