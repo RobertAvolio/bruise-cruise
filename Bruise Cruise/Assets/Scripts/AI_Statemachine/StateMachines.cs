@@ -167,6 +167,7 @@ namespace StateMachineStuff
         {
             foreach (KeyValuePair<string, SMContainer<T>> child in Children)
             {
+                child.Value.setParent(this);
                 State.addSubState(child.Value.Name, child.Value.State);
                 child.Value.assemble();
             }
@@ -194,11 +195,6 @@ namespace StateMachineStuff
             {
                 activeStates.AddRange(activeChildStates);
             }
-
-            //if (activeChildStates != null)
-            //{
-            //    activeStates.AddRange(activeChildStates);
-            //}
 
             return activeStates;
         }
