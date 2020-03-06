@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hurtbox: {fileID: 4309789238524618876}
-  health: 5
+  health: 3
 --- !u!1 &2300953454317282700
 GameObject:
   m_ObjectHideFlags: 0

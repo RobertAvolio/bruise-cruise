@@ -25,7 +25,8 @@ public class FireballInteractions : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.GetComponent<Enemy_AI_Duel_StateMachine>().TakeDamage();
+            col.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+            col.GetComponent<Fish_AI>()?.TakeDamage();
             this.gameObject.SetActive(false);
         }
 

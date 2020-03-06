@@ -21,8 +21,8 @@ public class Fish_AI : MonoBehaviour
     [SerializeField]
     public Vector3 jumpOffset;
     public List<action> actionSequence;
-    public float fishSpeed = 1f, gravity = 1f, agroDist = 5f;
-    public float attackJumpForce = 3f, attackAnticipation = 0.5f;
+    public float fishSpeed = 3f, gravity = 10f, agroDist = 25f;
+    public float attackJumpForce = 10f, attackAnticipation = 1f;
     public Rect attackHitbox = new Rect(-4f, -1f, 8f, 2f);
 
     private Rigidbody2D rb2d;

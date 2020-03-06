@@ -50,7 +50,8 @@ public class TequilaInteractions : MonoBehaviour
         // i took out the list because it wasn't working :[
         if (col.gameObject.tag == "Enemy") //&& !gameObjectsOut.Contains(col.gameObject)
         {
-            col.GetComponent<Enemy_AI_Duel_StateMachine>().TakeDamage();
+            col.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+            col.GetComponent<Fish_AI>()?.TakeDamage();
             //gameObjectsOut.Add(col.gameObject);
         }
         else if (col.gameObject.tag == "Enemy")// && !gameObjectsReturn.Contains(col.gameObject)
