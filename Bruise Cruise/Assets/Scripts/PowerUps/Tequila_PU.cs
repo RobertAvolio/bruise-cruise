@@ -30,7 +30,7 @@ public class Tequila_PU : PowerUp
             {
                 spawnDistanceX *= -1;
             }
-            Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
+            Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY, player.transform.position.z);
             controller.transform.SetPositionAndRotation(spawnPos, player.transform.rotation);
             GameObject go = Instantiate(limePrefab, new Vector3(0, 0, 0), player.transform.rotation) as GameObject;
             go.transform.parent = controller.transform;

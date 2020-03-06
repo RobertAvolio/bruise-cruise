@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthBar : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class HealthBar : MonoBehaviour
     void Update()
     {
         healthText.text = "Health: " + health;
+
+        if (health <= 0)
+        {
+            var scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+        }
     }
 
     public void IncreaseHealthBar(int value)

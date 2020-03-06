@@ -13,7 +13,6 @@
         <e p="ImagesFonts" t="Include">
           <e p="printClick.cs" t="Include" />
         </e>
-        <e p="Pause.cs" t="Include" />
         <e p="Scenes" t="Include">
           <e p="PauseMenu.cs" t="Include" />
         </e>
@@ -28,12 +27,16 @@
           <e p="Enemy_Attack.cs" t="Include" />
           <e p="Enemy_Movement.cs" t="Include" />
           <e p="ExitGame.cs" t="Include" />
+          <e p="Fish" t="Include">
+            <e p="Fish_AI.cs" t="Include" />
+          </e>
           <e p="GenericObjectPool.cs" t="Include" />
           <e p="HealthBar.cs" t="Include" />
           <e p="ItemSystem.cs" t="Include" />
           <e p="LevelChange.cs" t="Include" />
           <e p="LoadScene.cs" t="Include" />
           <e p="MenuShipBobbing.cs" t="Include" />
+          <e p="Pause.cs" t="Include" />
           <e p="PlayerCombatSystem.cs" t="Include" />
           <e p="PlayerInputTimer.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
