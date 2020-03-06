@@ -24,7 +24,7 @@ public class SceneShiftTrigger : MonoBehaviour
                 {
                     this.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
                 }
-                lvl.ShiftCamera();
+                //lvl.ShiftCamera();
 
                 wasActivated = true;
             }
