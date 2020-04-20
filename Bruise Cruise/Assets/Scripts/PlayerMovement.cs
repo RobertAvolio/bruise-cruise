@@ -1,85 +1,117 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool cannot_move = false;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
-
-    private float fallMultiplier = 10f;
-    private float lowJumpMultiplier = 5f;
+    [SerializeField] private Transform feetPosition;
+    [SerializeField] private LayerMask groundLayer;
+    
     private Rigidbody2D rb2d;
-    private Vector2 moveVector;
-    private bool jumping = false;
-    private bool falling = false;
+    private bool isGrounded;
     private Animator anim;
     private Transform tf;
-    private float jumpTimer;
-    public float jumpLength;
     
-    void Start()
+    private static readonly int Jumping = Animator.StringToHash("Jumping");
+    private static readonly int Walking = Animator.StringToHash("Walking");
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
+
+    private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         tf = GetComponent<Transform>();
     }
 
-    void Update() {
+    private void Update()
+    {
+        /*
+         *  REMOVE THIS! ONLY FOR TESTING! VOMIT!
+         */
+        if (Input.GetKey(KeyCode.P))
+        {
+            Vomit();
+        }
         
-        if (rb2d.velocity.y < 0)
+        if (!cannot_move)
         {
-            anim.SetBool("Jumping", false);
-            anim.SetBool("Falling", true);
-        }
-        if(rb2d.velocity.y >= 0)
-        {
-            anim.SetBool("Falling", false);
-        }
-
-        // Y movement
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")) && rb2d.velocity.y == 0) { 
-            jumping = true;
-            anim.SetBool("Jumping", true);
-            jumpTimer = jumpLength;
-            rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, jumpForce);
-        }
-        if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp("joystick button 0")))
-        {
-            jumping = false;
-        }
-
-        if (jumping && (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 0")))
-        {
-
-            if (jumpTimer > 0)
+            
+            Jump();
+            
+            if (Input.GetAxis("Horizontal") > 0)
             {
-                rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, jumpForce);
-                jumpTimer -= Time.deltaTime;
+                tf.eulerAngles = new Vector3(0,0,0);
+            } 
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                tf.eulerAngles = new Vector3(0,180,0);
+            }
+            
+            if (Input.GetAxisRaw("Horizontal") != 0f)
+            {
+                anim.SetBool(Walking, true);
             }
             else
             {
-                jumping = false;
+                anim.SetBool(Walking, false);
             }
-        }
-
-
-        // X movement
-        if (Input.GetAxis("Horizontal") > 0) {
-            tf.eulerAngles = new Vector3(0,0,0);
-        } else if (Input.GetAxis("Horizontal") < 0) {
-            tf.eulerAngles = new Vector3(0,180,0);
-        }
-
-        if (rb2d.velocity.x != 0) {
-            anim.SetBool("Walking",true);
-        } else {
-            anim.SetBool("Walking",false);
         }
     }
 
-    void FixedUpdate() {
-        rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2d.velocity.y);
 
+    private void FixedUpdate()
+    {
+        if (!cannot_move)
+        {
+            // X Movement
+            rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb2d.velocity.y);
+
+            isGrounded = Physics2D.OverlapCircle(feetPosition.position, 1f, groundLayer);
+            anim.SetBool(Grounded, isGrounded);
+
+            if (isGrounded)
+            {
+                if (rb2d.velocity.y <= 0f)
+                {
+                    anim.SetBool(Jumping, false);
+                }
+            }
+            else
+            {
+                anim.SetBool(Jumping, true);
+            }
+        }
+    }
+    
+    private void Jump()
+    {
+        // Y movement
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")) && isGrounded)
+        {
+            anim.SetTrigger("StartJump");
+            rb2d.AddForce(new Vector2(0f, jumpForce));
+        }
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(feetPosition.position, 1f);
+    }
+
+    public void Vomit()
+    {
+        cannot_move = true;
+        anim.SetTrigger("StartVomit");
+    }
+
+    public void EndVomit()
+    {
+        cannot_move = false;
+        anim.SetBool("Sick", false);
     }
 }

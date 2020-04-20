@@ -2,91 +2,82 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CombatState { Waiting, Hit1, Hit2, Hit3 }
-
 public class PlayerCombatSystem : MonoBehaviour
 {
-    private float comboWindow, attackTimer, cooldownTimer;
-    private bool h1, h2, h3;
     private Animator anim;
-    private CombatState curr;
-    private const float DEFAULT_TIME = 0.75f;
-    private const float COOLDOWN_TIME = 0.5f;
+    private KeyCode attack_key = KeyCode.E;
+    private PlayerMovement pm;
     
     public Transform L_Hitbox, R_Hitbox;
 
-
+    [SerializeField] private int num_of_inputs = 0;
+    [SerializeField] private float time_since_last_input = 0;
+    [SerializeField] private float max_delay_between_inputs = 1.2f;
+    
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         anim = GetComponent<Animator>();
-        attackTimer = DEFAULT_TIME;
-        cooldownTimer = 0f;
-        curr = CombatState.Waiting;
+        pm = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // CombatState machine! I finally made one and it's so cool! - Love, Ben
-        switch(curr) {
-            case CombatState.Waiting:
-                cooldownTimer -= Time.deltaTime;
+        if (Time.time - time_since_last_input > max_delay_between_inputs)
+        {
+            num_of_inputs = 0;
+        }
 
-                if (cooldownTimer <= 0) {
-                    if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
-                        curr = CombatState.Hit1;
-                        anim.SetBool("Hit1",true);
-                    }
-                }
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetKeyDown(attack_key))
+        {
+            time_since_last_input = Time.time;
+            num_of_inputs++;
 
-                break;
+            if (num_of_inputs == 1)
+            {
+                anim.SetBool("Attack1", true);
+            }
 
-            case CombatState.Hit1:
-                attackTimer -= Time.deltaTime;
+            num_of_inputs = Mathf.Clamp(num_of_inputs, 0, 3);
 
-                if (attackTimer >= 0f) {
-                    if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
-                        attackTimer = DEFAULT_TIME;
-                        curr = CombatState.Hit2;
-                        anim.SetBool("Hit2",true);
-                    }
-                } else {
-                    attackTimer = DEFAULT_TIME;
-                    cooldownTimer = COOLDOWN_TIME;
-                    curr = CombatState.Waiting;
-                }
-                
-                break;
-
-            case CombatState.Hit2:
-                attackTimer -= Time.deltaTime;
-
-                if (attackTimer >= 0f) {
-                    if (Input.GetKeyDown("e") || Input.GetKeyDown("joystick button 2")) {
-                        attackTimer = DEFAULT_TIME;
-                        curr = CombatState.Hit3;
-                        anim.SetBool("Hit3",true);
-                    }
-                } else {
-                    attackTimer = DEFAULT_TIME;
-                    cooldownTimer = COOLDOWN_TIME;
-                    curr = CombatState.Waiting;
-                }
-
-                break;
-                
-            case CombatState.Hit3:
-                attackTimer = DEFAULT_TIME;
-                cooldownTimer = COOLDOWN_TIME;
-                curr = CombatState.Waiting;
-
-                break;
+            pm.cannot_move = true;
         }
     }
 
-    private void ContinueCombo(CombatState newCombatState) {
+    public void EndFirstHit()
+    {
+        if (num_of_inputs >= 2)
+        {
+            anim.SetBool("Attack2", true);
+        }
+        else
+        {
+            anim.SetBool("Attack1", false);
+            num_of_inputs = 0;
+        }
+    }
 
+    public void EndSecondHit()
+    {
+        if (num_of_inputs >= 3)
+        {
+            anim.SetBool("Attack3", true);
+        }
+        else
+        {
+            anim.SetBool("Attack2", false);
+            num_of_inputs = 0;
+        }
+    }
+    
+    public void EndThirdHit()
+    {
+        anim.SetBool("Attack1", false);
+        anim.SetBool("Attack2", false);
+        anim.SetBool("Attack3", false);
+        num_of_inputs = 0;
+        pm.cannot_move = false;
     }
 
     private void Attack(int r) {
@@ -106,22 +97,10 @@ public class PlayerCombatSystem : MonoBehaviour
             }
         }
     }
-
-    public void StopHitAnimation(int index) {
-        if (index == 0) {
-            anim.SetBool("Hit1",false);
-        }
-        else if (index == 1) {
-            anim.SetBool("Hit2",false);
-        }
-        else if (index == 2) {
-            anim.SetBool("Hit3",false);
-        }
-    }
-
-        private void OnDrawGizmosSelected()
+    
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(this.gameObject.transform.position.x + 5, this.gameObject.transform.position.y + 5), new Vector2(3f, 2f));
+        Gizmos.DrawWireCube(new Vector3(this.gameObject.transform.position.x + 5, this.gameObject.transform.position.y + 5, this.gameObject.transform.position.z), new Vector2(3f, 2f));
     }
 }
