@@ -654,8 +654,8 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 6
+  m_Material: {fileID: 6200000, guid: 25752a69815587d49a0cdf0c59e74c85, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -673,12 +673,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 15
-  feetPosition: {fileID: 0}
+  jumpForce: 1500
+  feetPosition: {fileID: 5330521407914608553}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  jumpLength: 0.25
+    m_Bits: 512
 --- !u!114 &3802344292498360695
 MonoBehaviour:
   m_ObjectHideFlags: 0
