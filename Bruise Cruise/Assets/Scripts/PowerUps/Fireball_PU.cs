@@ -15,15 +15,21 @@ public class Fireball_PU : PowerUp
     private float timeBetweenAttack = 2;
     void Update()
     {
-        if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
+        if (!sick)
         {
-            Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
-            Instantiate(fireballPrefab, spawnPos, player.transform.rotation);
-            attackTimer = timeBetweenAttack;
-            Use();
-        } else
-        {
-            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
+            {
+                Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
+                Instantiate(fireballPrefab, spawnPos, player.transform.rotation);
+                attackTimer = timeBetweenAttack;
+                Use();
+            }
+            else
+            {
+                attackTimer -= Time.deltaTime;
+            }
         }
+
+        sick = movement.cannot_move;
     }
 }

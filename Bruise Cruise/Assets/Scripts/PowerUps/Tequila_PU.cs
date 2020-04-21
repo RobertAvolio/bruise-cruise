@@ -15,33 +15,47 @@ public class Tequila_PU : PowerUp
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
+        if (!sick)
         {
-            if (player.transform.eulerAngles.y >= 180 && spawnDistanceX > 0)
+            if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
             {
-                spawnDistanceX *= -1;
-            } else if(player.transform.eulerAngles.y >= 0 && player.transform.eulerAngles.y < 180 && spawnDistanceX < 0)
-            {
-                spawnDistanceX *= -1;
-            }
-            Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY, player.transform.position.z);
-            controller.transform.SetPositionAndRotation(spawnPos, player.transform.rotation);
-            GameObject go = Instantiate(limePrefab, new Vector3(0, 0, 0), player.transform.rotation) as GameObject;
-            go.transform.parent = controller.transform;
-            
-            Use();
+                if (player.transform.eulerAngles.y >= 180 && spawnDistanceX > 0)
+                {
+                    spawnDistanceX *= -1;
+                }
+                else if (player.transform.eulerAngles.y >= 0 && player.transform.eulerAngles.y < 180 && spawnDistanceX < 0)
+                {
+                    spawnDistanceX *= -1;
+                }
+                Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY, player.transform.position.z);
+                controller.transform.SetPositionAndRotation(spawnPos, player.transform.rotation);
+                GameObject go = Instantiate(limePrefab, new Vector3(0, 0, 0), player.transform.rotation) as GameObject;
+                go.transform.parent = controller.transform;
 
-            attackTimer = timeBetweenAttack; // i have no idea why timebetweenattack doesn't do anything when changed. 1000 is the same as 0.
+                Use();
+
+                attackTimer = timeBetweenAttack; // i have no idea why timebetweenattack doesn't do anything when changed. 1000 is the same as 0.
+            }
+            else
+            {
+                attackTimer -= Time.deltaTime;
+            }
         }
         else
         {
-            attackTimer -= Time.deltaTime;
+            //movement.cannot_move = true;
+        }
+
+        if (!movement.cannot_move)
+        {
+            sick = false;
         }
     }
+
 }

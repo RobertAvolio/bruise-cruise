@@ -16,6 +16,7 @@ public class SpriteMaskScroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.K))
         {
             decreaseDrunk(5);
@@ -23,9 +24,14 @@ public class SpriteMaskScroll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             increaseDrunk(5);
-        }
+        }*/
     }
 
+    public void setDrunkness(float alcoholContent)
+    {
+        transform.localPosition = transform.localPosition + new Vector3(0, alcoholContent, 0);
+    }
+    /*
     void increaseDrunk(int value)
     {
         if (transform.localPosition.y >= startPos)
@@ -54,5 +60,5 @@ public class SpriteMaskScroll : MonoBehaviour
                 transform.localPosition = transform.localPosition - new Vector3(0, value, 0);
             }
         }
-    }
+    }*/
 }
