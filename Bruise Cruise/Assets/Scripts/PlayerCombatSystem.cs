@@ -10,6 +10,11 @@ public class PlayerCombatSystem : MonoBehaviour
     
     public Transform L_Hitbox, R_Hitbox;
 
+    // New changes
+    public Transform hitbox_location;
+    public float hitbox_width;
+    public float hitbox_height;
+    
     [SerializeField] private int num_of_inputs = 0;
     [SerializeField] private float time_since_last_input = 0;
     [SerializeField] private float max_delay_between_inputs = 1.2f;
@@ -81,13 +86,16 @@ public class PlayerCombatSystem : MonoBehaviour
     }
 
     private void Attack(int r) {
+        Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(hitbox_location.position, new Vector2(hitbox_width, hitbox_height), 0);
+        foreach(Collider2D enemy in enemiesToDamage)
+        {
+            enemy.GetComponent<Fish_AI>()?.TakeDamage();
+            enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
+        }
+          
+        /*
         if (r == 0) {
-            Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(R_Hitbox.position.x, R_Hitbox.position.y),new Vector2(3, 2), 0f);
-            foreach(Collider2D enemy in enemiesToDamage)
-            {
-                enemy.GetComponent<Fish_AI>()?.TakeDamage();
-                enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
-            }
+            // Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(R_Hitbox.position.x, R_Hitbox.position.y),new Vector2(3, 2), 0f);
         } else {
             Collider2D[] enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(L_Hitbox.position.x, L_Hitbox.position.y),new Vector2(3, 2), 0f);
             foreach(Collider2D enemy in enemiesToDamage)
@@ -96,11 +104,13 @@ public class PlayerCombatSystem : MonoBehaviour
                 enemy.GetComponent<Enemy_AI_Duel_StateMachine>()?.TakeDamage();
             }
         }
+        */
     }
     
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(this.gameObject.transform.position.x + 5, this.gameObject.transform.position.y + 5, this.gameObject.transform.position.z), new Vector2(3f, 2f));
+        // Gizmos.DrawWireCube(new Vector3(this.gameObject.transform.position.x + 5, this.gameObject.transform.position.y + 5, this.gameObject.transform.position.z), new Vector2(3f, 2f));
+        Gizmos.DrawWireCube(hitbox_location.position, new Vector3(hitbox_width, hitbox_height, 1));
     }
 }
