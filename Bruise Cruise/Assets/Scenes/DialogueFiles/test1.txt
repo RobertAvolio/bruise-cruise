@@ -1,0 +1,4 @@
+C:Hey Wassup dawg
+E:Nuffin much dawg me jus chillin
+C:k
+END
