@@ -27,7 +27,22 @@ ModelImporter:
   - first:
       74: -2408886128927084088
     second: Armature|LeapUpAttackStationary
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eye
+    second: {fileID: 2100000, guid: 5d5df488082578b40a4f26ad746664ad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fish skin dark
+    second: {fileID: 2100000, guid: 32a666c13aceca74582e1ab8a458abec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fish skin light
+    second: {fileID: 2100000, guid: 8718bb212d8a72e4d957e53dd5367dc2, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
