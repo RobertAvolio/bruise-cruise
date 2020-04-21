@@ -314,7 +314,7 @@ class AttackState : State<MotionSM>
     public override void EnterState()
     {
         Owner.velocity = new Vector2(0, 0);
-        Debug.Log("entered the attacking state");
+        //Debug.Log("entered the attacking state");
         base.EnterState();
     }
 
@@ -329,7 +329,7 @@ class AttackState : State<MotionSM>
 
     public override void ExitState()
     {
-        Debug.Log("exited the attacking state");
+        //Debug.Log("exited the attacking state");
         base.ExitState();
     }
 }
@@ -341,7 +341,7 @@ class StaggerState : State<MotionSM>
     public override void EnterState()
     {
         staggerTimer = 10;
-        Debug.Log("entered Stagger state");
+        //Debug.Log("entered Stagger state");
         base.EnterState();
     }
 
@@ -357,7 +357,7 @@ class StaggerState : State<MotionSM>
 
     public override void ExitState()
     {
-        Debug.Log("exited Stagger state");
+        //Debug.Log("exited Stagger state");
         base.ExitState();
     }
 }
@@ -370,7 +370,7 @@ class RunningState : State<MotionSM>
     {
         Owner.Gravity = 10;
         Owner.speed = 2.5f;
-        Debug.Log("entered running state");
+        //Debug.Log("entered running state");
         base.EnterState();
     }
 
@@ -393,7 +393,7 @@ class RunningState : State<MotionSM>
 
     public override void ExitState()
     {
-        Debug.Log("exited running state");
+        //Debug.Log("exited running state");
         base.ExitState();
     }
 }
@@ -405,7 +405,7 @@ class JumpingState : State<MotionSM>
     {
         Owner.Gravity = 7;
         Owner.speed = 2;
-        Debug.Log("entered jumping state");
+        //Debug.Log("entered jumping state");
         base.EnterState();
     }
 
@@ -426,7 +426,7 @@ class JumpingState : State<MotionSM>
 
     public override void ExitState()
     {
-        Debug.Log("exited jumping state");
+        //Debug.Log("exited jumping state");
         base.ExitState();
     }
 }
@@ -438,7 +438,7 @@ class FallingState : State<MotionSM>
     {
         Owner.speed = 1;
         Owner.Gravity = 10;
-        Debug.Log("entered falling state");
+        //Debug.Log("entered falling state");
         base.EnterState();
     }
 
@@ -459,7 +459,7 @@ class FallingState : State<MotionSM>
 
     public override void ExitState()
     {
-        Debug.Log("exited falling state");
+        //Debug.Log("exited falling state");
         base.EnterState();
     }
 }
