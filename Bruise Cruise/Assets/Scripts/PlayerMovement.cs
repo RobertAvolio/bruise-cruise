@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private Transform feetPosition;
     [SerializeField] private LayerMask groundLayer;
-    
+    [SerializeField] private bool isSick;
+
     private Rigidbody2D rb2d;
     private bool isGrounded;
     private Animator anim;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update()
-    {
+    { 
         /*
          *  REMOVE THIS! ONLY FOR TESTING! VOMIT!
          */
@@ -84,6 +85,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetBool(Jumping, true);
             }
+        }
+        else
+        {
+            Debug.Log("Reached");
+            rb2d.velocity = new Vector2(0, rb2d.velocity.y);
         }
     }
     

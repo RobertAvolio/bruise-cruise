@@ -23,7 +23,7 @@ public class SpriteMaskScroll : MonoBehaviour
         transform.localPosition = new Vector3(transform.localPosition.x, startPos, transform.localPosition.z);
         drunkLevel = 0;
     }
-    
+
     void ChangeDrunkness(int value) //Send in value(neg or pos) by how much you want to change drunkness meter
     {
         StartCoroutine(Transition(transform.localPosition.y,value));
@@ -78,5 +78,5 @@ public class SpriteMaskScroll : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
