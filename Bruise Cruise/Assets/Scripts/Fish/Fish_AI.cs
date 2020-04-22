@@ -210,17 +210,17 @@ public class Fish_AI : MonoBehaviour
                     case action.pos1:
                         Owner.animator.Play("LeapLeft_Stationary", 0, 0);
                         Owner.animator.speed = Owner.animSpeed;
-                        print("HIT");
+                        //print("HIT");
                         break;
                     case action.pos2:
                         Owner.animator.Play("LeapRight_Stationary", 0, 0);
                         Owner.animator.speed = Owner.animSpeed;
-                        print("HIT");
+                        //print("HIT");
                         break;
                     case action.attack:
                         Owner.animator.Play("LeapUpAttack_Stationary", 0, 0);
                         Owner.animator.speed = 1f;
-                        print("HIT");
+                        // print("HIT");
                         break;
                 }
             }
@@ -236,7 +236,7 @@ public class Fish_AI : MonoBehaviour
             Owner.velocity = new Vector2(0, 0);
             if ((Owner.player.position - Owner.getSelf().transform.position).magnitude < Owner.agroDist || Owner.isAgro)
             {
-                print((Owner.player.position - Owner.getSelf().transform.position).magnitude);
+                // print((Owner.player.position - Owner.getSelf().transform.position).magnitude);
                 timer += Time.deltaTime;
                 if(timer > Owner.leapAnticipation)
                 {

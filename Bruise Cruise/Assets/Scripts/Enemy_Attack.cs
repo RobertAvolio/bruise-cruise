@@ -34,14 +34,14 @@ public class Enemy_Attack : MonoBehaviour
       if(distance <= obj.stoppingDistance)
       {
         isAttacking = true;
-        Debug.Log("target found");
+        //Debug.Log("target found");
         //AI is next to player and can now start the timer
         timer += Time.deltaTime;
 
         //AI may start attacking the player when 2 seconds has passed
         if(timer >= waitTime)
         {
-          Debug.Log("timer equals wait time");
+          //Debug.Log("timer equals wait time");
           FakeAttack();
           Attack();
           timer = 0.0f;
@@ -52,12 +52,12 @@ public class Enemy_Attack : MonoBehaviour
     // Function to display attack message to the console
     void FakeAttack()
     {
-      Debug.Log("Attacking the Player!");
+      //Debug.Log("Attacking the Player!");
     }
 
     //Function to attack the player (damage)
     void Attack()
     {
-      Debug.Log("Attacking in progress..");
+      //Debug.Log("Attacking in progress..");
     }
 }

@@ -14,7 +14,9 @@
           <e p="printClick.cs" t="Include" />
         </e>
         <e p="Scenes" t="Include">
-          <e p="PauseMenu.cs" t="Include" />
+          <e p="DialogueFiles" t="Include">
+            <e p="test1.txt" t="Include" />
+          </e>
         </e>
         <e p="Scripts" t="Include">
           <e p="AI_State_Machine.cs" t="Include" />
@@ -23,6 +25,9 @@
             <e p="StateMachines.cs" t="Include" />
           </e>
           <e p="BetterRetroCamera.cs" t="Include" />
+          <e p="Dialogue.cs" t="Include" />
+          <e p="DialoguePhotoSignal.cs" t="Include" />
+          <e p="DialogueTest.cs" t="Include" />
           <e p="Enemy.cs" t="Include" />
           <e p="Enemy_Attack.cs" t="Include" />
           <e p="Enemy_Movement.cs" t="Include" />
@@ -36,7 +41,9 @@
           <e p="LevelChange.cs" t="Include" />
           <e p="LoadScene.cs" t="Include" />
           <e p="MenuShipBobbing.cs" t="Include" />
+          <e p="MusicManager.cs" t="Include" />
           <e p="Pause.cs" t="Include" />
+          <e p="PauseMenu.cs" t="Include" />
           <e p="PlayerCombatSystem.cs" t="Include" />
           <e p="PlayerInputTimer.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
@@ -59,6 +66,34 @@
           <e p="CausticsShader.shader" t="Include" />
           <e p="PixelateImageEffect.shader" t="Include" />
           <e p="WaterShader.shader" t="Include" />
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
         </e>
       </e>
       <e p="Bruise Cruise.sln" t="IncludeFlat" />

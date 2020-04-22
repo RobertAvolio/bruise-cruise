@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UI;
+//using UnityEditor.UI;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Reached");
+            // Debug.Log("Reached");
             rb2d.velocity = new Vector2(0, rb2d.velocity.y);
         }
     }

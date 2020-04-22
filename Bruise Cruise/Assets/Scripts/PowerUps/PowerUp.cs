@@ -39,7 +39,7 @@ public abstract class PowerUp : MonoBehaviour
             stats.alcoholContent = 0;
             movement.cannot_move = true;
             movement.Vomit();
-            Debug.Log("BLEEUGGHH");
+            // Debug.Log("BLEEUGGHH");
         }
     }
 }

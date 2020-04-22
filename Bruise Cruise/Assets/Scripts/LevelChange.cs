@@ -21,9 +21,9 @@ public class LevelChange : MonoBehaviour
             
             if (Vector3.Distance(cam.transform.position,targetPosition) < 0.001f) {
                 isLevelShifting = false;
-                Debug.Log("Index increasing:");
+                // Debug.Log("Index increasing:");
                 positionIndex++;
-                Debug.Log(positionIndex);
+                // Debug.Log(positionIndex);
             }
         }
     }
