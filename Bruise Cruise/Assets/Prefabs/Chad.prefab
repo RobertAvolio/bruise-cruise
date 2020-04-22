@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannot_move: 0
-  speed: 10
+  speed: 20
   jumpForce: 1500
   feetPosition: {fileID: 5330521407914608553}
   groundLayer:
@@ -707,9 +707,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   L_Hitbox: {fileID: 3677348936152246203}
   R_Hitbox: {fileID: 4897741186688026858}
-  hitbox_location: {fileID: 0}
-  hitbox_width: 0
-  hitbox_height: 0
+  hitbox_location: {fileID: 9064502509986805847}
+  hitbox_width: 5.09
+  hitbox_height: 6.5
   num_of_inputs: 0
   time_since_last_input: 0
   max_delay_between_inputs: 1.2
