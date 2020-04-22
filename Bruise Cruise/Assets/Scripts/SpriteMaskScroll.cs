@@ -24,9 +24,11 @@ public class SpriteMaskScroll : MonoBehaviour
         drunkLevel = 0;
     }
 
-    void ChangeDrunkness(int value) //Send in value(neg or pos) by how much you want to change drunkness meter
+    public void ChangeDrunkness(float value) //Send in value(neg or pos) by how much you want to change drunkness meter
     {
-        StartCoroutine(Transition(transform.localPosition.y,value));
+        drunkLevel = (int)value;
+        transform.localPosition = new Vector3(transform.localPosition.x, value, transform.localPosition.z);
+        //StartCoroutine(Transition(transform.localPosition.y, value));
     }
 
     //Will cause drunkmeter to change colors and slide smoothly when drunk level is changed.
@@ -78,5 +80,5 @@ public class SpriteMaskScroll : MonoBehaviour
                 }
             }
         }
-    }*/
+    }
 }

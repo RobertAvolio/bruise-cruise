@@ -13,13 +13,13 @@ public class Fireball_PU : PowerUp
 
     [SerializeField]
     private float timeBetweenAttack = 2;
-    void Update()
+    private void Update()
     {
         if (!sick)
         {
             if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
             {
-                Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY);
+                Vector3 spawnPos = new Vector3(player.transform.position.x + spawnDistanceX, player.transform.position.y + spawnDistanceY, player.transform.position.z);
                 Instantiate(fireballPrefab, spawnPos, player.transform.rotation);
                 attackTimer = timeBetweenAttack;
                 Use();

@@ -37,7 +37,7 @@ public abstract class PowerUp : MonoBehaviour
         if (stats.alcoholContent >= CONTENT_MAX) 
         {
             stats.alcoholContent = 0;
-            sick = true;
+            movement.cannot_move = true;
             movement.Vomit();
             Debug.Log("BLEEUGGHH");
         }

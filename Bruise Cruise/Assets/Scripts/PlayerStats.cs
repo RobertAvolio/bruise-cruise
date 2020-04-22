@@ -21,7 +21,7 @@ public class PlayerStats : MonoBehaviour
     }
     private void Update()
     {
-        sms.setDrunkness(alcoholContent);
+        sms.ChangeDrunkness(alcoholContent);
         if (timer >= 0)
         {
             timer -= Time.deltaTime;

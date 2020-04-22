@@ -19,9 +19,9 @@ public class Tequila_PU : PowerUp
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (!sick)
+        if (!movement.cannot_move)
         {
             if (attackTimer <= 0 && (on && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 3"))))
             {
@@ -47,15 +47,7 @@ public class Tequila_PU : PowerUp
                 attackTimer -= Time.deltaTime;
             }
         }
-        else
-        {
-            //movement.cannot_move = true;
-        }
-
-        if (!movement.cannot_move)
-        {
-            sick = false;
-        }
+        
     }
 
 }
